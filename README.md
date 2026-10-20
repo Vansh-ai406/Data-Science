@@ -44,11 +44,26 @@ and fit preprocessing only on training folds for evaluation.
    calibration, and uncertainty, not accuracy alone.
    The Cardio70k baseline also includes a same-split ablation without its
    deterministic BMI, pulse-pressure, and BP-category features.
-6. Add SHAP/LIME analysis, subgroup and error analysis, and ablations of
-   preprocessing and feature engineering.
+6. Calibration diagnostics are now available through
+   `scripts/run_calibration_analysis.py`, using Cardio70k out-of-fold and
+   unified-cohort source-held-out predictions. Held-out permutation importance
+   and exploratory subgroup/error analysis are available through
+   `scripts/run_explainability_error_analysis.py`. Calibration is descriptive
+   and does not establish prospective or clinical calibration.
 7. Consider external validation or image fusion only after obtaining
    compatible labels, schemas, and legitimate patient-level links. Treat the
    contribution as a hypothesis until experiments establish it.
+
+The consolidated results are in `reports/consolidated_project_results.html`
+and `reports/consolidated_project_results.md`; calibration details and
+source-specific metrics are in `reports/calibration_analysis.md`, while
+permutation and subgroup details are in
+`reports/explainability_error_analysis.md`. A leakage-safe HPEM adaptation is
+documented in `reports/hpem_benchmark.md`; it did not outperform the matched
+XGBoost baseline on source-held-out evaluation and is not an exact reproduction
+of the paper's pooled 5-fold experiment. Remaining research includes independent
+external validation, uncertainty/threshold-utility analysis, and reproducing
+the paper protocol on matched datasets if in scope.
 
 The foundation paper's HPEM uses Random Forest, Gradient Boosting, and SVM,
 polynomial feature expansion, mutual-information selection, and an XGBoost
