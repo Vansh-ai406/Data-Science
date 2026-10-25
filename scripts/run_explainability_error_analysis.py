@@ -49,12 +49,17 @@ def evaluate_groups(
             positive_count = int(y_true.sum())
             negative_count = len(y_true) - positive_count
             sufficient = len(y_true) >= minimum_group_size and min(positive_count, negative_count) >= 20
+            display_group = (
+                {0: "Female (code 0)", 1: "Male (code 1)"}.get(int(group_value), str(group_value))
+                if group_type == "Sex"
+                else str(group_value)
+            )
             rows.append(
                 {
                     "cohort": cohort,
                     "model": MODEL_NAME,
                     "group_type": group_type,
-                    "group": str(group_value),
+                    "group": display_group,
                     "n": len(y_true),
                     "positive_n": positive_count,
                     "negative_n": negative_count,
@@ -124,7 +129,7 @@ def fit_cardio(path: Path, repeats: int, minimum_group_size: int) -> tuple[pd.Da
     result = add_age_band(frame, "age_years")
     result["target"] = target
     result["probability"] = predictions
-    groups = [("Overall", None), ("Sex code", "sex"), ("Age band", "age_band")]
+    groups = [("Overall", None), ("Sex", "sex"), ("Age band", "age_band")]
     return pd.DataFrame(importance_rows), evaluate_groups(
         "Cardio70k", result, groups, minimum_group_size
     )
@@ -170,7 +175,7 @@ def fit_unified(path: Path, repeats: int, minimum_group_size: int) -> tuple[pd.D
         prediction_frames.append(held_out)
     held_out_predictions = pd.concat(prediction_frames, ignore_index=True)
     held_out_predictions = add_age_band(held_out_predictions, "age")
-    groups = [("Overall", None), ("Source", "source"), ("Sex code", "sex"), ("Age band", "age_band")]
+    groups = [("Overall", None), ("Source", "source"), ("Sex", "sex"), ("Age band", "age_band")]
     return pd.DataFrame(importance_rows), evaluate_groups(
         "Unified clinical", held_out_predictions, groups, minimum_group_size
     )
@@ -286,7 +291,7 @@ def write_report(
 
 ## Protocol
 
-XGBoost was evaluated using Cardio70k stratified 5-fold out-of-fold predictions and unified-cohort leave-one-source-out predictions. Permutation importance was measured on each held-out fold/source using ROC-AUC decrease, then summarized across held-out units. Group metrics use the same held-out probabilities and a fixed 0.5 threshold. Age bands are <45, 45-59, and 60+. Sex is reported only as dataset code because code-to-label semantics were not verified.
+XGBoost was evaluated using Cardio70k stratified 5-fold out-of-fold predictions and unified-cohort leave-one-source-out predictions. Permutation importance was measured on each held-out fold/source using ROC-AUC decrease, then summarized across held-out units. Group metrics use the same held-out probabilities and a fixed 0.5 threshold. Age bands are <45, 45-59, and 60+. The supplied dataset legend documents the binary sex field as 0=female and 1=male; this coding does not represent a broader set of gender identities.
 
 ## Permutation importance
 

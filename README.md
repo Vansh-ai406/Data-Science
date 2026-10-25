@@ -62,8 +62,17 @@ permutation and subgroup details are in
 documented in `reports/hpem_benchmark.md`; it did not outperform the matched
 XGBoost baseline on source-held-out evaluation and is not an exact reproduction
 of the paper's pooled 5-fold experiment. Remaining research includes independent
-external validation, uncertainty/threshold-utility analysis, and reproducing
-the paper protocol on matched datasets if in scope.
+external validation, a prespecified clinical-utility analysis with expert input,
+subgroup uncertainty intervals, and reproducing the paper protocol on matched
+datasets if in scope. The supplied dataset legend maps sex code 0 to female and
+1 to male; this is a binary biological-sex field. Conditional bootstrap and
+threshold profiles are in `reports/uncertainty_threshold_analysis.md`; they do
+not estimate uncertainty over new sources or populations.
+
+An inventory of the additional ECG and synthetic CT/MRI archives is in
+`reports/additional_dataset_suitability.md`. The ECG label/provenance and the
+image diagnosis labels/patient linkage are unverified, so neither archive is
+currently used for CVD model training.
 
 The foundation paper's HPEM uses Random Forest, Gradient Boosting, and SVM,
 polynomial feature expansion, mutual-information selection, and an XGBoost

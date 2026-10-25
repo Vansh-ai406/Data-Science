@@ -128,6 +128,9 @@ def build_report(reports_dir: Path) -> str:
     subgroup = read_rows(reports_dir / "subgroup_error_metrics.csv")
     hpem = read_rows(reports_dir / "hpem_summary.csv")
     hpem_sources = read_rows(reports_dir / "hpem_source_metrics.csv")
+    uncertainty = read_rows(reports_dir / "bootstrap_metric_intervals.csv")
+    paired_differences = read_rows(reports_dir / "paired_bootstrap_differences.csv")
+    threshold_profiles = read_rows(reports_dir / "threshold_profiles.csv")
     cv_columns = [("Model", "model"), ("ROC-AUC", "roc_auc_oof"), ("PR-AUC", "pr_auc_oof"), ("F1", "f1_oof"), ("Brier", "brier_score_oof")]
     deep_columns = [("Model", "model"), ("ROC-AUC mean", "roc_auc_mean"), ("ROC-AUC SD", "roc_auc_std"), ("PR-AUC mean", "pr_auc_mean"), ("F1 mean", "f1_mean"), ("Brier mean", "brier_score_mean")]
     nested_columns = [("Selected model", "selected_model"), ("Outer folds", "n_outer_folds_selected"), ("ROC-AUC mean", "roc_auc_mean"), ("ROC-AUC SD", "roc_auc_sd"), ("F1 mean", "f1_mean")]
@@ -137,6 +140,12 @@ def build_report(reports_dir: Path) -> str:
     subgroup_columns = [("Cohort", "cohort"), ("Group type", "group_type"), ("Group", "group"), ("N", "n"), ("Sensitivity", "sensitivity"), ("Specificity", "specificity"), ("F1", "f1"), ("ROC-AUC", "roc_auc"), ("Brier", "brier_score"), ("Status", "interpretation_status")]
     hpem_columns = [("Model", "model"), ("Sources", "n_sources"), ("Records", "n_total"), ("ROC-AUC mean", "roc_auc_mean"), ("ROC-AUC SD", "roc_auc_sd_across_sources"), ("F1 mean", "f1_mean"), ("F1 SD", "f1_sd_across_sources"), ("Brier mean", "brier_score_mean")]
     hpem_source_columns = [("Held-out source", "held_out_source"), ("Model", "model"), ("N", "n_test"), ("ROC-AUC", "roc_auc"), ("F1", "f1"), ("Brier", "brier_score")]
+    uncertainty = [row for row in uncertainty if row.get("scope") in {"All folds", "All sources"}]
+    uncertainty_columns = [("Cohort", "cohort"), ("Scope", "scope"), ("Model", "model"), ("Metric", "metric"), ("Estimate", "estimate"), ("95% CI low", "ci_95_lower"), ("95% CI high", "ci_95_upper")]
+    paired_differences = [row for row in paired_differences if row.get("scope") in {"All folds", "All sources"}]
+    difference_columns = [("Cohort", "cohort"), ("Scope", "scope"), ("First minus second", "comparison"), ("Metric", "metric"), ("Difference", "estimate_difference"), ("95% CI low", "ci_95_lower"), ("95% CI high", "ci_95_upper")]
+    threshold_profiles = [row for row in threshold_profiles if row.get("scope") in {"All folds", "All held-out sources"} and float(row.get("threshold", "0")) in {0.3, 0.5, 0.7}]
+    threshold_columns = [("Cohort", "cohort"), ("Scope", "scope"), ("Model", "model"), ("Threshold", "threshold"), ("Sensitivity", "sensitivity"), ("Specificity", "specificity"), ("Precision", "precision"), ("Predicted positive rate", "predicted_positive_rate"), ("FP", "false_positive"), ("FN", "false_negative")]
     nested_auc, selection_rows, selection_columns = selection_summary(nested, unified)
     cardio_xgb = find_calibration_row(calibration, "Cardio70k", "All folds", "XGBoost")
     unified_lr = find_calibration_row(calibration, "Unified clinical", "All held-out sources", "LogisticRegression")
@@ -183,7 +192,7 @@ Permutation importance is predictive reliance, not a causal or clinical risk-fac
 
 {markdown_table(subgroup, subgroup_columns)}
 
-Age/sex/source results are descriptive at a fixed 0.5 threshold. Small cells are flagged; sex is left as its source code because code-to-label semantics have not been verified. These are not fairness or clinical utility assessments. See [explainability_error_analysis.md](explainability_error_analysis.md) for methodology and figures.
+Age/sex/source results are descriptive at a fixed 0.5 threshold. Small cells are flagged; the supplied legend documents sex code 0 as female and 1 as male. This binary biological-sex field does not represent broader gender identities. These are not fairness or clinical utility assessments. See [explainability_error_analysis.md](explainability_error_analysis.md) for methodology and figures.
 
 ## HPEM adaptation benchmark
 
@@ -195,11 +204,27 @@ The leakage-safe HPEM adaptation was evaluated on the same five source-held-out 
 
 See [hpem_benchmark.md](hpem_benchmark.md) for the method and leakage-prevention details.
 
+## Uncertainty and threshold trade-offs
+
+These percentile intervals use 300 stratified bootstrap resamples and are conditional on the observed records, fitted models, split structure, and source mix. They do not quantify model-selection uncertainty or uncertainty over new sources. For unified pooled predictions, Logistic Regression exceeds XGBoost in ROC-AUC by 0.0460 (95% CI 0.0319 to 0.0606); HPEM is below XGBoost by 0.0836 (-0.1053 to -0.0641). Read the paired intervals alongside source-specific results.
+
+{markdown_table(uncertainty, uncertainty_columns)}
+
+{markdown_table(paired_differences, difference_columns)}
+
+Threshold profiles show the sensitivity/specificity trade-off only; no clinical cutoff is selected because the intended action and relative error costs have not been defined.
+
+{markdown_table(threshold_profiles, threshold_columns)}
+
+![Threshold trade-offs](plots/threshold_tradeoffs.png)
+
+See [uncertainty_threshold_analysis.md](uncertainty_threshold_analysis.md) for the full source-specific intervals and threshold profiles.
+
 ## Research status
 
-Completed: data audit, quality analysis, baseline and deep-tabular benchmarks, internal cross-validation, nested model selection, source-held-out stress testing, results visualization, probability calibration, held-out permutation importance, exploratory subgroup/error analysis, and a leakage-safe HPEM adaptation benchmark.
+Completed: data audit, quality analysis, baseline and deep-tabular benchmarks, internal cross-validation, nested model selection, source-held-out stress testing, results visualization, probability calibration, held-out permutation importance, exploratory subgroup/error analysis, leakage-safe HPEM adaptation, conditional bootstrap uncertainty, and threshold trade-off analysis.
 
-Remaining: independent external validation, uncertainty intervals and threshold-utility analysis, verification of coded subgroup semantics, and exact HPEM reproduction on matched paper datasets/protocol or multimodal work supported by valid linked data. The present results are research benchmarks, not evidence of clinical readiness.
+Remaining: independent external validation, subgroup uncertainty intervals, prespecified clinical-utility analysis with expert input, and exact HPEM reproduction on matched paper datasets/protocol or multimodal work supported by valid linked data. The present results are research benchmarks, not evidence of clinical readiness.
 
 ## Figures
 
@@ -225,6 +250,9 @@ def build_html_report(reports_dir: Path) -> str:
     subgroup = read_rows(reports_dir / "subgroup_error_metrics.csv")
     hpem = read_rows(reports_dir / "hpem_summary.csv")
     hpem_sources = read_rows(reports_dir / "hpem_source_metrics.csv")
+    uncertainty = read_rows(reports_dir / "bootstrap_metric_intervals.csv")
+    paired_differences = read_rows(reports_dir / "paired_bootstrap_differences.csv")
+    threshold_profiles = read_rows(reports_dir / "threshold_profiles.csv")
     cv_columns = [("Model", "model"), ("ROC-AUC", "roc_auc_oof"), ("PR-AUC", "pr_auc_oof"), ("F1", "f1_oof"), ("Brier score", "brier_score_oof")]
     deep_columns = [("Model", "model"), ("ROC-AUC mean", "roc_auc_mean"), ("ROC-AUC SD", "roc_auc_std"), ("PR-AUC mean", "pr_auc_mean"), ("F1 mean", "f1_mean"), ("Brier mean", "brier_score_mean")]
     nested_columns = [("Selected model", "selected_model"), ("Outer folds", "n_outer_folds_selected"), ("ROC-AUC mean", "roc_auc_mean"), ("ROC-AUC SD", "roc_auc_sd"), ("F1 mean", "f1_mean")]
@@ -234,6 +262,12 @@ def build_html_report(reports_dir: Path) -> str:
     subgroup_columns = [("Cohort", "cohort"), ("Group type", "group_type"), ("Group", "group"), ("N", "n"), ("Sensitivity", "sensitivity"), ("Specificity", "specificity"), ("F1", "f1"), ("ROC-AUC", "roc_auc"), ("Brier", "brier_score"), ("Status", "interpretation_status")]
     hpem_columns = [("Model", "model"), ("Sources", "n_sources"), ("Records", "n_total"), ("ROC-AUC mean", "roc_auc_mean"), ("ROC-AUC SD", "roc_auc_sd_across_sources"), ("F1 mean", "f1_mean"), ("F1 SD", "f1_sd_across_sources"), ("Brier mean", "brier_score_mean")]
     hpem_source_columns = [("Held-out source", "held_out_source"), ("Model", "model"), ("N", "n_test"), ("ROC-AUC", "roc_auc"), ("F1", "f1"), ("Brier", "brier_score")]
+    uncertainty = [row for row in uncertainty if row.get("scope") in {"All folds", "All sources"}]
+    uncertainty_columns = [("Cohort", "cohort"), ("Scope", "scope"), ("Model", "model"), ("Metric", "metric"), ("Estimate", "estimate"), ("95% CI low", "ci_95_lower"), ("95% CI high", "ci_95_upper")]
+    paired_differences = [row for row in paired_differences if row.get("scope") in {"All folds", "All sources"}]
+    difference_columns = [("Cohort", "cohort"), ("Scope", "scope"), ("First minus second", "comparison"), ("Metric", "metric"), ("Difference", "estimate_difference"), ("95% CI low", "ci_95_lower"), ("95% CI high", "ci_95_upper")]
+    threshold_profiles = [row for row in threshold_profiles if row.get("scope") in {"All folds", "All held-out sources"} and float(row.get("threshold", "0")) in {0.3, 0.5, 0.7}]
+    threshold_columns = [("Cohort", "cohort"), ("Scope", "scope"), ("Model", "model"), ("Threshold", "threshold"), ("Sensitivity", "sensitivity"), ("Specificity", "specificity"), ("Precision", "precision"), ("Predicted positive rate", "predicted_positive_rate"), ("FP", "false_positive"), ("FN", "false_negative")]
     nested_auc, selection_rows, selection_columns = selection_summary(nested, unified)
     cardio_xgb = find_calibration_row(calibration, "Cardio70k", "All folds", "XGBoost")
     unified_lr = find_calibration_row(calibration, "Unified clinical", "All held-out sources", "LogisticRegression")
@@ -304,14 +338,19 @@ figcaption {{ padding: 8px 2px 0; color: var(--muted); font-size: .9rem; }}
 <p>Permutation importance is predictive reliance, not a causal or clinical risk-factor ranking. Cardio70k importance is led by systolic blood pressure, age, and cholesterol; unified-cohort importance varies more across sources.</p>
 {html_table(importance, importance_columns)}
 {html_table(subgroup, subgroup_columns)}
-<p>Subgroup results use a fixed 0.5 threshold and are descriptive, not fairness or utility assessments. Small cells are flagged; sex is shown as its source code because code semantics have not been verified.</p>
+<p>Subgroup results use a fixed 0.5 threshold and are descriptive, not fairness or utility assessments. Small cells are flagged. The supplied legend documents sex code 0 as female and 1 as male; this binary biological-sex field does not represent broader gender identities.</p>
 <h2>HPEM adaptation benchmark</h2>
 <p>The leakage-safe HPEM adaptation averaged ROC-AUC 0.6107 and F1 0.6291 on the same source-held-out folds, below the standalone XGBoost baseline (ROC-AUC 0.7018; F1 0.7490). This differs from the paper's pooled 5-fold setup and is not an exact reproduction.</p>
 {html_table(hpem, hpem_columns)}
 {html_table(hpem_sources, hpem_source_columns)}
+<h2>Uncertainty and threshold trade-offs</h2>
+<p>Intervals use 300 stratified bootstrap resamples and are conditional on the observed records, fitted models, split structure, and source mix. They do not quantify model-selection uncertainty or uncertainty over new sources. No clinical threshold is selected; intended use and relative error costs are not defined.</p>
+{html_table(uncertainty, uncertainty_columns)}
+{html_table(paired_differences, difference_columns)}
+{html_table(threshold_profiles, threshold_columns)}
 <h2>Research status</h2>
-<p>Completed: data audit and quality analysis, baseline and deep-tabular benchmarks, internal and nested validation, source-held-out stress testing, visualization, calibration diagnostics, held-out permutation importance, exploratory subgroup/error analysis, and a leakage-safe HPEM adaptation benchmark.</p>
-<p>Remaining: independent external validation, uncertainty intervals and threshold-utility analysis, verification of coded subgroup semantics, exact HPEM reproduction on matched paper data/protocol, or multimodal extension if valid linked data become available. These results are research benchmarks, not evidence of clinical readiness.</p>
+<p>Completed: data audit and quality analysis, baseline and deep-tabular benchmarks, internal and nested validation, source-held-out stress testing, visualization, calibration diagnostics, held-out permutation importance, exploratory subgroup/error analysis, leakage-safe HPEM adaptation, conditional bootstrap uncertainty, and threshold trade-off analysis.</p>
+<p>Remaining: independent external validation, subgroup uncertainty intervals, prespecified clinical-utility analysis with expert input, exact HPEM reproduction on matched paper data/protocol, or multimodal extension if valid linked data become available. These results are research benchmarks, not evidence of clinical readiness.</p>
 <h2>Figures</h2><div class="figures">{figure_markup}</div>
 <h2>Interpretation and limitations</h2>
 <ul class="notes">

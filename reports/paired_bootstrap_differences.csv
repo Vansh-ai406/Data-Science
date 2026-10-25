@@ -1,0 +1,92 @@
+cohort,scope,comparison,metric,estimate_difference,ci_95_lower,ci_95_upper,bootstrap_replicates
+Cardio70k,All folds,LogisticRegression minus XGBoost,roc_auc,-0.007933836306872277,-0.00896668626969655,-0.0070262231048501605,300
+Cardio70k,All folds,LogisticRegression minus XGBoost,pr_auc,-0.011813225195231758,-0.014663253335757489,-0.008789170482550216,300
+Cardio70k,All folds,LogisticRegression minus XGBoost,accuracy,-0.006547002814190517,-0.008289832460885613,-0.004738921858823852,300
+Cardio70k,All folds,LogisticRegression minus XGBoost,sensitivity,-0.03527955436352381,-0.037786259541984696,-0.0326114828023225,300
+Cardio70k,All folds,LogisticRegression minus XGBoost,specificity,0.02158605563892424,0.01928965139097307,0.024158778714071353,300
+Cardio70k,All folds,LogisticRegression minus XGBoost,f1,-0.015786535730687334,-0.017789452875250883,-0.013646693703829631,300
+Cardio70k,All folds,LogisticRegression minus XGBoost,brier_score,0.004891248957585137,0.004446160125813293,0.005386905405170017,300
+Unified clinical,All sources,HPEM (OOF soft-vote meta) minus XGBoost,roc_auc,-0.08360427002126147,-0.1053320035657335,-0.06412213190999291,300
+Unified clinical,All sources,HPEM (OOF soft-vote meta) minus XGBoost,pr_auc,-0.06672474008110074,-0.08792246663896156,-0.048882711899288944,300
+Unified clinical,All sources,HPEM (OOF soft-vote meta) minus XGBoost,accuracy,-0.05995828988529717,-0.08347236704900933,-0.04064129301355582,300
+Unified clinical,All sources,HPEM (OOF soft-vote meta) minus XGBoost,sensitivity,-0.10661764705882348,-0.13419117647058826,-0.07672334558823535,300
+Unified clinical,All sources,HPEM (OOF soft-vote meta) minus XGBoost,specificity,0.00120481927710836,-0.0337349397590361,0.031325301204819245,300
+Unified clinical,All sources,HPEM (OOF soft-vote meta) minus XGBoost,f1,-0.07114155099188435,-0.0936291023068498,-0.05208974998065594,300
+Unified clinical,All sources,HPEM (OOF soft-vote meta) minus XGBoost,brier_score,0.019040973245703086,0.009192113746712971,0.028944527484876508,300
+Unified clinical,All sources,LogisticRegression minus XGBoost,roc_auc,0.04603007618710142,0.031919793143161,0.06061143470942588,300
+Unified clinical,All sources,LogisticRegression minus XGBoost,pr_auc,0.05213346479454195,0.03367888449890263,0.07349522711526793,300
+Unified clinical,All sources,LogisticRegression minus XGBoost,accuracy,0.0307612095933264,0.013529718456725744,0.04667622523461935,300
+Unified clinical,All sources,LogisticRegression minus XGBoost,sensitivity,0.08547794117647056,0.062454044117647066,0.10893841911764701,300
+Unified clinical,All sources,LogisticRegression minus XGBoost,specificity,-0.04096385542168679,-0.0668975903614458,-0.015030120481927731,300
+Unified clinical,All sources,LogisticRegression minus XGBoost,f1,0.04163092243632682,0.025466657008704104,0.05640458131421622,300
+Unified clinical,All sources,LogisticRegression minus XGBoost,brier_score,-0.02116666176982887,-0.02995575738756178,-0.013694265573203862,300
+Unified clinical,Mendeley_India,HPEM (OOF soft-vote meta) minus XGBoost,roc_auc,-0.011336206896551682,-0.039236145320197105,0.016939039408866968,300
+Unified clinical,Mendeley_India,HPEM (OOF soft-vote meta) minus XGBoost,pr_auc,-0.00857592795080464,-0.03422108727731715,0.015911355139625504,300
+Unified clinical,Mendeley_India,HPEM (OOF soft-vote meta) minus XGBoost,accuracy,0.015000000000000013,-0.013000000000000012,0.04500000000000004,300
+Unified clinical,Mendeley_India,HPEM (OOF soft-vote meta) minus XGBoost,sensitivity,-0.025862068965517238,-0.05862068965517242,0.006982758620689588,300
+Unified clinical,Mendeley_India,HPEM (OOF soft-vote meta) minus XGBoost,specificity,0.07142857142857145,0.030952380952380953,0.11553571428571424,300
+Unified clinical,Mendeley_India,HPEM (OOF soft-vote meta) minus XGBoost,f1,-0.0024576666912432543,-0.027735360416660495,0.02476328674706846,300
+Unified clinical,Mendeley_India,HPEM (OOF soft-vote meta) minus XGBoost,brier_score,-0.03731567927196178,-0.04900335898007235,-0.026820133749483572,300
+Unified clinical,Mendeley_India,LogisticRegression minus XGBoost,roc_auc,0.13539819376026274,0.1071506568144499,0.16180254515599346,300
+Unified clinical,Mendeley_India,LogisticRegression minus XGBoost,pr_auc,0.13359060953381896,0.10331272309437568,0.15993878192734906,300
+Unified clinical,Mendeley_India,LogisticRegression minus XGBoost,accuracy,0.07699999999999996,0.050999999999999934,0.10452499999999997,300
+Unified clinical,Mendeley_India,LogisticRegression minus XGBoost,sensitivity,0.17931034482758623,0.14137931034482754,0.21469827586206894,300
+Unified clinical,Mendeley_India,LogisticRegression minus XGBoost,specificity,-0.06428571428571428,-0.10000000000000002,-0.02255952380952384,300
+Unified clinical,Mendeley_India,LogisticRegression minus XGBoost,f1,0.0946966723985797,0.06861960751623374,0.12041574245188144,300
+Unified clinical,Mendeley_India,LogisticRegression minus XGBoost,brier_score,-0.047653561909445474,-0.06080583697407378,-0.03566155225016356,300
+Unified clinical,UCI_Cleveland,HPEM (OOF soft-vote meta) minus XGBoost,roc_auc,-0.1807553956834531,-0.24239340235128973,-0.1176895069310407,300
+Unified clinical,UCI_Cleveland,HPEM (OOF soft-vote meta) minus XGBoost,pr_auc,-0.19901272348484833,-0.2680868365782906,-0.12723655788375404,300
+Unified clinical,UCI_Cleveland,HPEM (OOF soft-vote meta) minus XGBoost,accuracy,-0.15841584158415845,-0.21625412541254127,-0.09900990099009899,300
+Unified clinical,UCI_Cleveland,HPEM (OOF soft-vote meta) minus XGBoost,sensitivity,-0.2517985611510791,-0.3419064748201439,-0.1473021582733815,300
+Unified clinical,UCI_Cleveland,HPEM (OOF soft-vote meta) minus XGBoost,specificity,-0.07926829268292679,-0.15853658536585363,-0.0060975609756097615,300
+Unified clinical,UCI_Cleveland,HPEM (OOF soft-vote meta) minus XGBoost,f1,-0.19320720089830112,-0.2617668161146422,-0.12636432803913686,300
+Unified clinical,UCI_Cleveland,HPEM (OOF soft-vote meta) minus XGBoost,brier_score,0.065881158894879,0.03759727520135119,0.09204928753565923,300
+Unified clinical,UCI_Cleveland,LogisticRegression minus XGBoost,roc_auc,0.0132479382347781,-0.013086725741358076,0.03646473065450075,300
+Unified clinical,UCI_Cleveland,LogisticRegression minus XGBoost,pr_auc,0.020562370578814826,-0.011140914592808682,0.05142899206771867,300
+Unified clinical,UCI_Cleveland,LogisticRegression minus XGBoost,accuracy,-0.0033003300330033403,-0.04620462046204621,0.03803630363036303,300
+Unified clinical,UCI_Cleveland,LogisticRegression minus XGBoost,sensitivity,0.0,-0.061330935251798564,0.0647482014388489,300
+Unified clinical,UCI_Cleveland,LogisticRegression minus XGBoost,specificity,-0.0060975609756097615,-0.07317073170731703,0.060975609756097504,300
+Unified clinical,UCI_Cleveland,LogisticRegression minus XGBoost,f1,-0.0024972129319954517,-0.047084771806490754,0.0395175804433608,300
+Unified clinical,UCI_Cleveland,LogisticRegression minus XGBoost,brier_score,-0.0036475516730961888,-0.019471398230795328,0.013553104747569584,300
+Unified clinical,UCI_Hungary,HPEM (OOF soft-vote meta) minus XGBoost,roc_auc,-0.2212440722429625,-0.2770936333366966,-0.1730343809908184,300
+Unified clinical,UCI_Hungary,HPEM (OOF soft-vote meta) minus XGBoost,pr_auc,-0.28586374657639557,-0.35591048044819346,-0.21428202511199013,300
+Unified clinical,UCI_Hungary,HPEM (OOF soft-vote meta) minus XGBoost,accuracy,-0.167235494880546,-0.22866894197952214,-0.11766211604095568,300
+Unified clinical,UCI_Hungary,HPEM (OOF soft-vote meta) minus XGBoost,sensitivity,-0.2735849056603773,-0.3728773584905661,-0.17924528301886788,300
+Unified clinical,UCI_Hungary,HPEM (OOF soft-vote meta) minus XGBoost,specificity,-0.106951871657754,-0.17393048128342248,-0.04278074866310161,300
+Unified clinical,UCI_Hungary,HPEM (OOF soft-vote meta) minus XGBoost,f1,-0.24260880598908774,-0.3245264183653813,-0.17611291279422817,300
+Unified clinical,UCI_Hungary,HPEM (OOF soft-vote meta) minus XGBoost,brier_score,0.11049295583080829,0.08467210131983001,0.1371185760919751,300
+Unified clinical,UCI_Hungary,LogisticRegression minus XGBoost,roc_auc,0.018262536575522237,-0.009630713348804392,0.04396503884572684,300
+Unified clinical,UCI_Hungary,LogisticRegression minus XGBoost,pr_auc,0.03277903145301386,-0.017977500911907033,0.08071524145486086,300
+Unified clinical,UCI_Hungary,LogisticRegression minus XGBoost,accuracy,0.020477815699658675,-0.018856655290102334,0.06143344709897608,300
+Unified clinical,UCI_Hungary,LogisticRegression minus XGBoost,sensitivity,0.09433962264150952,0.037735849056603765,0.16981132075471705,300
+Unified clinical,UCI_Hungary,LogisticRegression minus XGBoost,specificity,-0.021390374331550777,-0.07232620320855611,0.021390374331550836,300
+Unified clinical,UCI_Hungary,LogisticRegression minus XGBoost,f1,0.04306000916170405,-0.0010886960995971666,0.0963235373948681,300
+Unified clinical,UCI_Hungary,LogisticRegression minus XGBoost,brier_score,-0.0010382508400128554,-0.016078735256792678,0.01418376211694592,300
+Unified clinical,UCI_LongBeachVA,HPEM (OOF soft-vote meta) minus XGBoost,roc_auc,-0.030007949125596012,-0.08303192898781138,0.027162824589295264,300
+Unified clinical,UCI_LongBeachVA,HPEM (OOF soft-vote meta) minus XGBoost,pr_auc,-0.009561048388261773,-0.038145922137174174,0.022555060252278825,300
+Unified clinical,UCI_LongBeachVA,HPEM (OOF soft-vote meta) minus XGBoost,accuracy,-0.14572864321608048,-0.22110552763819097,-0.09045226130653267,300
+Unified clinical,UCI_LongBeachVA,HPEM (OOF soft-vote meta) minus XGBoost,sensitivity,-0.22297297297297292,-0.30405405405405406,-0.15540540540540537,300
+Unified clinical,UCI_LongBeachVA,HPEM (OOF soft-vote meta) minus XGBoost,specificity,0.07843137254901966,-0.05882352941176472,0.2156862745098039,300
+Unified clinical,UCI_LongBeachVA,HPEM (OOF soft-vote meta) minus XGBoost,f1,-0.1387017344481425,-0.2049841595205201,-0.08507201046016837,300
+Unified clinical,UCI_LongBeachVA,HPEM (OOF soft-vote meta) minus XGBoost,brier_score,0.08936181861341727,0.06232469925560751,0.11982640964556499,300
+Unified clinical,UCI_LongBeachVA,LogisticRegression minus XGBoost,roc_auc,0.026894541600424038,-0.02988540010598836,0.10641891891891891,300
+Unified clinical,UCI_LongBeachVA,LogisticRegression minus XGBoost,pr_auc,0.03198573173007735,-0.009112315832121416,0.07642981107283561,300
+Unified clinical,UCI_LongBeachVA,LogisticRegression minus XGBoost,accuracy,-0.045226130653266416,-0.09547738693467334,0.0026381909547737665,300
+Unified clinical,UCI_LongBeachVA,LogisticRegression minus XGBoost,sensitivity,-0.04054054054054057,-0.09138513513513515,0.020270270270270285,300
+Unified clinical,UCI_LongBeachVA,LogisticRegression minus XGBoost,specificity,-0.05882352941176472,-0.17647058823529413,0.05882352941176472,300
+Unified clinical,UCI_LongBeachVA,LogisticRegression minus XGBoost,f1,-0.03300400916380297,-0.07245717094900078,0.001731161954002668,300
+Unified clinical,UCI_LongBeachVA,LogisticRegression minus XGBoost,brier_score,-0.00045537255650696107,-0.02730321920484804,0.024955599498989133,300
+Unified clinical,UCI_Switzerland,HPEM (OOF soft-vote meta) minus XGBoost,roc_auc,-0.011956521739130421,-0.07937499999999993,0.04811141304347818,300
+Unified clinical,UCI_Switzerland,HPEM (OOF soft-vote meta) minus XGBoost,pr_auc,0.0006628302818624254,-0.007714332357847717,0.010245136852345202,300
+Unified clinical,UCI_Switzerland,HPEM (OOF soft-vote meta) minus XGBoost,accuracy,-0.0325203252032521,-0.11382113821138212,0.05691056910569103,300
+Unified clinical,UCI_Switzerland,HPEM (OOF soft-vote meta) minus XGBoost,sensitivity,-0.034782608695652195,-0.12173913043478268,0.060869565217391286,300
+Unified clinical,UCI_Switzerland,HPEM (OOF soft-vote meta) minus XGBoost,specificity,0.0,0.0,0.0,300
+Unified clinical,UCI_Switzerland,HPEM (OOF soft-vote meta) minus XGBoost,f1,-0.022464957997191948,-0.07701725644386194,0.037274423917102006,300
+Unified clinical,UCI_Switzerland,HPEM (OOF soft-vote meta) minus XGBoost,brier_score,0.030218185768902617,-0.0008442614684962104,0.053981550737536015,300
+Unified clinical,UCI_Switzerland,LogisticRegression minus XGBoost,roc_auc,0.021739130434782705,-0.06252717391304354,0.101141304347826,300
+Unified clinical,UCI_Switzerland,LogisticRegression minus XGBoost,pr_auc,0.011414811586864415,-0.004132324341230028,0.026337979653999186,300
+Unified clinical,UCI_Switzerland,LogisticRegression minus XGBoost,accuracy,-0.11382113821138218,-0.20752032520325198,-0.03638211382113843,300
+Unified clinical,UCI_Switzerland,LogisticRegression minus XGBoost,sensitivity,-0.13043478260869568,-0.22608695652173916,-0.04304347826086993,300
+Unified clinical,UCI_Switzerland,LogisticRegression minus XGBoost,specificity,0.125,0.0,0.375,300
+Unified clinical,UCI_Switzerland,LogisticRegression minus XGBoost,f1,-0.0850342716948681,-0.15905961381564415,-0.02682790577107593,300
+Unified clinical,UCI_Switzerland,LogisticRegression minus XGBoost,brier_score,0.06956048314415028,0.03393072951194493,0.10555114966610897,300

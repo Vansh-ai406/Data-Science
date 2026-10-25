@@ -2,7 +2,7 @@
 
 ## Protocol
 
-XGBoost was evaluated using Cardio70k stratified 5-fold out-of-fold predictions and unified-cohort leave-one-source-out predictions. Permutation importance was measured on each held-out fold/source using ROC-AUC decrease, then summarized across held-out units. Group metrics use the same held-out probabilities and a fixed 0.5 threshold. Age bands are <45, 45-59, and 60+. Sex is reported only as dataset code because code-to-label semantics were not verified.
+XGBoost was evaluated using Cardio70k stratified 5-fold out-of-fold predictions and unified-cohort leave-one-source-out predictions. Permutation importance was measured on each held-out fold/source using ROC-AUC decrease, then summarized across held-out units. Group metrics use the same held-out probabilities and a fixed 0.5 threshold. Age bands are <45, 45-59, and 60+. The supplied dataset legend documents the binary sex field as 0=female and 1=male; this coding does not represent a broader set of gender identities.
 
 ## Permutation importance
 
@@ -38,8 +38,8 @@ Permutation importance estimates how much this fitted model relies on a feature 
 | cohort           | group_type | group           | n     | positive_n | sensitivity | specificity | precision | f1    | roc_auc | brier_score | interpretation_status        |
 | ---------------- | ---------- | --------------- | ----- | ---------- | ----------- | ----------- | --------- | ----- | ------- | ----------- | ---------------------------- |
 | Cardio70k        | Overall    | All             | 68581 | 33929      | 0.688       | 0.782       | 0.756     | 0.720 | 0.802   | 0.180       | Reviewable                   |
-| Cardio70k        | Sex code   | 0               | 44665 | 21981      | 0.690       | 0.781       | 0.754     | 0.720 | 0.804   | 0.180       | Reviewable                   |
-| Cardio70k        | Sex code   | 1               | 23916 | 11948      | 0.685       | 0.784       | 0.760     | 0.721 | 0.798   | 0.182       | Reviewable                   |
+| Cardio70k        | Sex        | Female (code 0) | 44665 | 21981      | 0.690       | 0.781       | 0.754     | 0.720 | 0.804   | 0.180       | Reviewable                   |
+| Cardio70k        | Sex        | Male (code 1)   | 23916 | 11948      | 0.685       | 0.784       | 0.760     | 0.721 | 0.798   | 0.182       | Reviewable                   |
 | Cardio70k        | Age band   | 45-59           | 45680 | 22430      | 0.636       | 0.809       | 0.763     | 0.693 | 0.781   | 0.188       | Reviewable                   |
 | Cardio70k        | Age band   | 60+             | 12812 | 8546       | 0.871       | 0.368       | 0.734     | 0.797 | 0.723   | 0.191       | Reviewable                   |
 | Cardio70k        | Age band   | <45             | 10089 | 2953       | 0.560       | 0.941       | 0.798     | 0.658 | 0.830   | 0.132       | Reviewable                   |
@@ -49,8 +49,8 @@ Permutation importance estimates how much this fitted model relies on a feature 
 | Unified clinical | Source     | UCI_Hungary     | 293   | 106        | 0.736       | 0.797       | 0.672     | 0.703 | 0.837   | 0.160       | Reviewable                   |
 | Unified clinical | Source     | UCI_LongBeachVA | 199   | 148        | 0.818       | 0.569       | 0.846     | 0.832 | 0.685   | 0.194       | Reviewable                   |
 | Unified clinical | Source     | UCI_Switzerland | 123   | 115        | 0.774       | 0.625       | 0.967     | 0.860 | 0.658   | 0.175       | Small cell: descriptive only |
-| Unified clinical | Sex code   | 0               | 428   | 183        | 0.448       | 0.800       | 0.626     | 0.522 | 0.733   | 0.223       | Reviewable                   |
-| Unified clinical | Sex code   | 1               | 1490  | 905        | 0.761       | 0.412       | 0.667     | 0.711 | 0.624   | 0.260       | Reviewable                   |
+| Unified clinical | Sex        | Female (code 0) | 428   | 183        | 0.448       | 0.800       | 0.626     | 0.522 | 0.733   | 0.223       | Reviewable                   |
+| Unified clinical | Sex        | Male (code 1)   | 1490  | 905        | 0.761       | 0.412       | 0.667     | 0.711 | 0.624   | 0.260       | Reviewable                   |
 | Unified clinical | Age band   | 45-59           | 730   | 414        | 0.744       | 0.595       | 0.706     | 0.725 | 0.743   | 0.215       | Reviewable                   |
 | Unified clinical | Age band   | 60+             | 582   | 373        | 0.775       | 0.397       | 0.696     | 0.734 | 0.617   | 0.253       | Reviewable                   |
 | Unified clinical | Age band   | <45             | 606   | 301        | 0.578       | 0.544       | 0.556     | 0.567 | 0.601   | 0.296       | Reviewable                   |
