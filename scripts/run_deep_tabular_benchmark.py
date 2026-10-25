@@ -86,7 +86,7 @@ def evaluate_cardio_cv(path: Path) -> pd.DataFrame:
     frame = pd.read_csv(path)
     features = frame.drop(columns=["patient_id", "target"])
     target = frame["target"].astype(int)
-    splitter = StratifiedKFold(n_splits=3, shuffle=True, random_state=RANDOM_SEED)
+    splitter = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_SEED)
     rows = []
     for fold_number, (train_idx, test_idx) in enumerate(splitter.split(features, target), start=1):
         train_x = features.iloc[train_idx]
@@ -245,7 +245,7 @@ def main() -> None:
         "",
         "The deep tabular benchmark should be read as a model-capability comparison under the same leakage-safe design. On the large Cardio70k cohort, the deep MLPs are expected to be competitive but not automatically better than tree ensembles; on the heterogeneous unified cohort, the generalization picture remains source-dependent and should be interpreted per cohort rather than pooled across sources.",
         "",
-        "This is the correct next research step after the baseline and nested selection stage. It preserves the original research workflow and provides the evidence needed before making stronger generalization claims.",
+        "This is a second stratified 5-fold benchmark using an alternative fixed MLP/XGBoost configuration from the primary cross-validation suite; both are internal estimates, not independent external validation. The MLP is a neural baseline rather than a novel architecture. Source-held-out results remain separate by cohort and source.",
     ]
     report_path.write_text("\n".join(report) + "\n", encoding="utf-8")
     print(f"Wrote {report_dir / 'deep_tabular_benchmark.md'}")

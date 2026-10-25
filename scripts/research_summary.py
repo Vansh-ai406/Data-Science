@@ -12,6 +12,8 @@ def summarize_internal_and_generalization(reports_dir: Path) -> dict[str, object
     cv = pd.read_csv(reports_dir / "cross_validation_summary.csv")
     nested = pd.read_csv(reports_dir / "nested_model_selection_summary.csv")
     baseline = pd.read_csv(reports_dir / "baseline_metrics.csv")
+    deep_cardio = pd.read_csv(reports_dir / "deep_tabular_cardio_summary.csv")
+    deep_unified = pd.read_csv(reports_dir / "deep_tabular_unified_summary.csv")
     calibration_path = reports_dir / "calibration_metrics.csv"
     calibration = pd.read_csv(calibration_path) if calibration_path.exists() else pd.DataFrame()
 
@@ -44,6 +46,12 @@ def summarize_internal_and_generalization(reports_dir: Path) -> dict[str, object
         "generalization_best_roc_auc": float(generalization_best["roc_auc_mean"]),
         "nested_best_model": str(nested.sort_values("roc_auc_mean", ascending=False).iloc[0]["selected_model"]),
         "nested_best_roc_auc": float(nested.sort_values("roc_auc_mean", ascending=False).iloc[0]["roc_auc_mean"]),
+        "mlp_cardio": deep_cardio.loc[deep_cardio["model"] == "MLP_Deep"].iloc[0],
+        "xgb_cardio_deep": deep_cardio.loc[deep_cardio["model"] == "XGBoost"].iloc[0],
+        "mlp_unified": deep_unified.loc[deep_unified["model"] == "MLP_Deep"].iloc[0],
+        "xgb_unified_deep": deep_unified.loc[deep_unified["model"] == "XGBoost"].iloc[0],
+        "deep_unified_best_auc": deep_unified.sort_values("roc_auc_mean", ascending=False).iloc[0],
+        "deep_unified_best_f1": deep_unified.sort_values("f1_mean", ascending=False).iloc[0],
         "cv_table": cv[["model", "accuracy_oof", "precision_oof", "f1_oof", "roc_auc_oof", "brier_score_oof"]].sort_values("roc_auc_oof", ascending=False),
         "unified_table": unified_mean.reset_index().rename(columns={"index": "model"}),
         "calibration_table": calibration,
@@ -99,6 +107,14 @@ def write_report(summary: dict[str, object], output_path: Path) -> None:
             unified_table,
             ["model", "accuracy_mean", "precision_mean", "f1_mean", "roc_auc_mean", "pr_auc_mean", "brier_score_mean"],
         ),
+        "",
+        "## Neural Baseline and Student Contribution",
+        "",
+        f"The two-hidden-layer scikit-learn MLP is a genuine neural-network baseline, not a newly proposed architecture. On Cardio70k 5-fold CV it scored ROC-AUC {summary['mlp_cardio']['roc_auc_mean']:.4f} and F1 {summary['mlp_cardio']['f1_mean']:.4f}; XGBoost scored ROC-AUC {summary['xgb_cardio_deep']['roc_auc_mean']:.4f} and F1 {summary['xgb_cardio_deep']['f1_mean']:.4f}.",
+        "",
+        f"Across unified source-held-out evaluations, MLP mean ROC-AUC/F1 were {summary['mlp_unified']['roc_auc_mean']:.4f}/{summary['mlp_unified']['f1_mean']:.4f}; standalone XGBoost was {summary['xgb_unified_deep']['roc_auc_mean']:.4f}/{summary['xgb_unified_deep']['f1_mean']:.4f}. Logistic Regression led mean ROC-AUC ({summary['deep_unified_best_auc']['model']}: {summary['deep_unified_best_auc']['roc_auc_mean']:.4f}) while {summary['deep_unified_best_f1']['model']} led mean F1 ({summary['deep_unified_best_f1']['f1_mean']:.4f}). Means are across five sources and are not independent external validation.",
+        "",
+        "The student-level contribution is the leakage-aware, source-aware comparison across separate cohorts, with calibration, error, and uncertainty analyses, including the documented negative HPEM adaptation result. Do not claim a novel neural architecture or clinical readiness.",
         "",
         "## Probability calibration",
         "",

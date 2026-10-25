@@ -156,6 +156,10 @@ def build_report(reports_dir: Path) -> str:
 
 The current evidence supports **XGBoost as the selected internal Cardio70k model**: nested 5-fold model selection chose it in all five outer folds. The source-aware unified-cohort benchmark is a separate stress test, not a pooled validation cohort; its fold variability is substantial. Logistic regression leads by ROC-AUC there, while the deeper MLP baseline leads by mean F1. These findings do not establish clinical readiness or external validity.
 
+## Student-level contribution
+
+This project does not propose a new neural architecture. Its contribution is a reproducible empirical comparison of linear/tree models, a two-hidden-layer MLP, and a leakage-safe HPEM adaptation across two separately handled cohorts, followed by source-held-out generalization, calibration, permutation-importance, subgroup/error, and uncertainty analysis. The central research question is whether the neural or hybrid models improve on strong tabular baselines and transfer across sources; current results say they do not consistently do so. This transparent negative result is part of the finding, not a failed experiment.
+
 ## Model selection by task
 
 {markdown_table(selection_rows, selection_columns)}
@@ -169,6 +173,8 @@ The current evidence supports **XGBoost as the selected internal Cardio70k model
 {markdown_table(nested, nested_columns)}
 
 ## Deep tabular benchmark: Cardio70k
+
+This is a second stratified 5-fold comparison using an alternative fixed MLP/XGBoost configuration. The earlier dedicated 5-fold table uses different fixed settings; neither evaluation is external validation.
 
 {markdown_table(cardio, deep_columns)}
 
@@ -321,6 +327,8 @@ figcaption {{ padding: 8px 2px 0; color: var(--muted); font-size: .9rem; }}
 <header><h1>Cardiovascular Disease Detection</h1><p class="lede">Consolidated model evaluation and research results</p></header>
 <h2>Executive summary</h2>
 <div class="callout">XGBoost was selected in all five nested outer folds for Cardio70k (mean ROC-AUC {nested_auc}). Its Cardio70k out-of-fold calibration slope is {float(cardio_xgb['calibration_slope']):.3f} (10-bin ECE {float(cardio_xgb['ece_10_bins']):.3f}), but unified source-held-out calibration is substantially weaker (Logistic Regression slope {float(unified_lr['calibration_slope']):.3f}; XGBoost {float(unified_xgb['calibration_slope']):.3f}). This is not evidence of clinical readiness.</div>
+<h2>Student-level contribution</h2>
+<p>This project does not claim a new neural architecture. Its contribution is a reproducible empirical comparison of linear/tree models, a two-hidden-layer MLP, and a leakage-safe HPEM adaptation across two separately handled cohorts, with source-held-out generalization, calibration, permutation-importance, subgroup/error, and uncertainty analysis. The research question is whether neural or hybrid models improve on strong tabular baselines and transfer across sources; current results show they do not consistently do so. That transparent negative result is part of the finding.</p>
 <h2>Model selection by task</h2>
 {html_table(selection_rows, selection_columns)}
 <h2>Cardio70k cross-validation</h2>
@@ -328,6 +336,7 @@ figcaption {{ padding: 8px 2px 0; color: var(--muted); font-size: .9rem; }}
 <h2>Nested model selection</h2>
 {html_table(nested, nested_columns)}
 <h2>Deep tabular benchmark: Cardio70k</h2>
+<p>This is a second stratified 5-fold comparison using an alternative fixed MLP/XGBoost configuration. The earlier dedicated 5-fold table uses different fixed settings; neither evaluation is external validation.</p>
 {html_table(cardio, deep_columns)}
 <h2>Deep tabular benchmark: unified cohort</h2>
 {html_table(unified, deep_columns)}

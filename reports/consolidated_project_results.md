@@ -4,6 +4,10 @@
 
 The current evidence supports **XGBoost as the selected internal Cardio70k model**: nested 5-fold model selection chose it in all five outer folds. The source-aware unified-cohort benchmark is a separate stress test, not a pooled validation cohort; its fold variability is substantial. Logistic regression leads by ROC-AUC there, while the deeper MLP baseline leads by mean F1. These findings do not establish clinical readiness or external validity.
 
+## Student-level contribution
+
+This project does not propose a new neural architecture. Its contribution is a reproducible empirical comparison of linear/tree models, a two-hidden-layer MLP, and a leakage-safe HPEM adaptation across two separately handled cohorts, followed by source-held-out generalization, calibration, permutation-importance, subgroup/error, and uncertainty analysis. The central research question is whether the neural or hybrid models improve on strong tabular baselines and transfer across sources; current results say they do not consistently do so. This transparent negative result is part of the finding, not a failed experiment.
+
 ## Model selection by task
 
 | Evaluation task | Selected model | Evidence |
@@ -31,11 +35,13 @@ The current evidence supports **XGBoost as the selected internal Cardio70k model
 
 ## Deep tabular benchmark: Cardio70k
 
+This is a second stratified 5-fold comparison using an alternative fixed MLP/XGBoost configuration. The earlier dedicated 5-fold table uses different fixed settings; neither evaluation is external validation.
+
 | Model | ROC-AUC mean | ROC-AUC SD | PR-AUC mean | F1 mean | Brier mean |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| Logistic Regression | 0.7938 | 0.0020 | 0.7709 | 0.7046 | 0.1852 |
-| MLP (deep) | 0.8001 | 0.0018 | 0.7786 | 0.7252 | 0.1814 |
-| XGBoost | 0.8016 | 0.0020 | 0.7824 | 0.7202 | 0.1803 |
+| Logistic Regression | 0.7939 | 0.0030 | 0.7712 | 0.7047 | 0.1851 |
+| MLP (deep) | 0.7998 | 0.0021 | 0.7801 | 0.7182 | 0.1813 |
+| XGBoost | 0.8017 | 0.0026 | 0.7828 | 0.7197 | 0.1803 |
 
 ## Deep tabular benchmark: unified cohort
 

@@ -30,6 +30,14 @@ This project follows a leak-safe, research-oriented workflow. The supplied data 
 | XGBoost | 0.7108 | 0.7508 | 0.7490 | 0.7018 | 0.7773 | 0.2050 |
 | HistGradientBoosting | 0.6947 | 0.7344 | 0.7360 | 0.6854 | 0.7714 | 0.2206 |
 
+## Neural Baseline and Student Contribution
+
+The two-hidden-layer scikit-learn MLP is a genuine neural-network baseline, not a newly proposed architecture. On Cardio70k 5-fold CV it scored ROC-AUC 0.7998 and F1 0.7182; XGBoost scored ROC-AUC 0.8017 and F1 0.7197.
+
+Across unified source-held-out evaluations, MLP mean ROC-AUC/F1 were 0.7431/0.7570; standalone XGBoost was 0.6989/0.7430. Logistic Regression led mean ROC-AUC (LogisticRegression: 0.7449) while MLP_Deep led mean F1 (0.7570). Means are across five sources and are not independent external validation.
+
+The student-level contribution is the leakage-aware, source-aware comparison across separate cohorts, with calibration, error, and uncertainty analyses, including the documented negative HPEM adaptation result. Do not claim a novel neural architecture or clinical readiness.
+
 ## Probability calibration
 
 Cardio70k calibration uses pooled out-of-fold predictions; unified-cohort calibration uses leave-one-source-out predictions. These are diagnostics on the evaluated cohorts, not prospective calibration estimates. No post-hoc calibration was fit.
