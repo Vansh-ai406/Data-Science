@@ -255,6 +255,10 @@ Remaining: independent external validation, subgroup uncertainty intervals, pres
 
 ![Calibration Curves](plots/calibration_curves.png)
 
+### Cardio Mlp Paired Bootstrap
+
+![Cardio Mlp Paired Bootstrap](plots/cardio_mlp_paired_bootstrap.png)
+
 ### Cv Brier Score
 
 ![Cv Brier Score](plots/cv_brier_score.png)
@@ -262,6 +266,10 @@ Remaining: independent external validation, subgroup uncertainty intervals, pres
 ### Cv Roc Auc
 
 ![Cv Roc Auc](plots/cv_roc_auc.png)
+
+### Decision Curves
+
+![Decision Curves](plots/decision_curves.png)
 
 ### Deep Cardio F1
 
@@ -278,6 +286,10 @@ Remaining: independent external validation, subgroup uncertainty intervals, pres
 ### Hpem Source Comparison
 
 ![Hpem Source Comparison](plots/hpem_source_comparison.png)
+
+### Missingness Indicator Comparison
+
+![Missingness Indicator Comparison](plots/missingness_indicator_comparison.png)
 
 ### Nested Selection Roc Auc
 

@@ -5,6 +5,9 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -40,10 +43,6 @@ def plot_metric_bar(frame: pd.DataFrame, metric: str, title: str, output_path: P
     ax.grid(axis="y", linestyle="--", alpha=0.3)
     fig.tight_layout()
     fig.savefig(output_path, dpi=300)
-    try:
-        plt.show()
-    except Exception:
-        pass
     plt.close(fig)
 
 
@@ -59,16 +58,13 @@ def plot_nested_selection(summary: pd.DataFrame, output_path: Path) -> None:
     ax.grid(axis="y", linestyle="--", alpha=0.3)
     fig.tight_layout()
     fig.savefig(output_path, dpi=300)
-    try:
-        plt.show()
-    except Exception:
-        pass
     plt.close(fig)
 
 
-def build_report() -> None:
+def build_report(reports_dir: Path | None = None) -> None:
     repo = Path(__file__).resolve().parent.parent
-    reports_dir = repo / "reports"
+    if reports_dir is None:
+        reports_dir = repo / "reports"
     plots_dir = reports_dir / "plots"
     plots_dir.mkdir(parents=True, exist_ok=True)
 
@@ -227,7 +223,7 @@ def main() -> None:
     pd.read_csv(cs)
     pd.read_csv(ns)
     pd.read_csv(bs)
-    build_report()
+    build_report(report_dir)
 
 
 if __name__ == "__main__":

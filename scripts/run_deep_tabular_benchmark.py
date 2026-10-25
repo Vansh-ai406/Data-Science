@@ -5,6 +5,9 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.compose import ColumnTransformer
@@ -180,10 +183,6 @@ def plot_summary(frame: pd.DataFrame, title: str, metric: str, out_path: Path) -
     ax.grid(axis="y", linestyle="--", alpha=0.3)
     fig.tight_layout()
     fig.savefig(out_path, dpi=300)
-    try:
-        plt.show()
-    except Exception:
-        pass
     plt.close(fig)
 
 

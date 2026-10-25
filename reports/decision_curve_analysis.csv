@@ -1,0 +1,161 @@
+cohort,model,threshold,net_benefit
+Cardio70k,Treat All,0.05,0.4681356429086159
+Cardio70k,Treat None,0.05,0.0
+Cardio70k,XGBoost,0.05,0.4681479218964283
+Cardio70k,LogisticRegression,0.05,0.4681625031944554
+Cardio70k,MLP,0.05,0.46809113157779625
+Cardio70k,Treat All,0.1,0.4385876230702057
+Cardio70k,Treat None,0.1,0.0
+Cardio70k,XGBoost,0.1,0.43957591104760146
+Cardio70k,LogisticRegression,0.1,0.43900075984764164
+Cardio70k,MLP,0.1,0.43944305922113186
+Cardio70k,Treat All,0.15,0.4055633656037472
+Cardio70k,Treat None,0.15,0.0
+Cardio70k,XGBoost,0.15,0.4103640435483331
+Cardio70k,LogisticRegression,0.15,0.4084118650595217
+Cardio70k,MLP,0.15,0.4101487549715793
+Cardio70k,Treat All,0.2,0.36841107595398137
+Cardio70k,Treat None,0.2,0.0
+Cardio70k,XGBoost,0.2,0.380808824601566
+Cardio70k,LogisticRegression,0.2,0.37867995508960206
+Cardio70k,MLP,0.2,0.38013808489231715
+Cardio70k,Treat All,0.25,0.32630514768424684
+Cardio70k,Treat None,0.25,0.0
+Cardio70k,XGBoost,0.25,0.3515356537038927
+Cardio70k,LogisticRegression,0.25,0.34918320428884575
+Cardio70k,MLP,0.25,0.35056356716874937
+Cardio70k,Treat All,0.3,0.27818408680455015
+Cardio70k,Treat None,0.3,0.0
+Cardio70k,XGBoost,0.3,0.3246171888507229
+Cardio70k,LogisticRegression,0.3,0.3219738078226581
+Cardio70k,MLP,0.3,0.3229382565350253
+Cardio70k,Treat All,0.35,0.2226597857895155
+Cardio70k,Treat None,0.35,0.0
+Cardio70k,XGBoost,0.35,0.29972418913962484
+Cardio70k,LogisticRegression,0.35,0.29545747700921876
+Cardio70k,MLP,0.35,0.29759531962766095
+Cardio70k,Treat All,0.4,0.1578814346053085
+Cardio70k,Treat None,0.4,0.0
+Cardio70k,XGBoost,0.4,0.2756545787706021
+Cardio70k,LogisticRegression,0.4,0.2722862989263304
+Cardio70k,MLP,0.4,0.2734673840665296
+Cardio70k,Treat All,0.45,0.08132520138760935
+Cardio70k,Treat None,0.45,0.0
+Cardio70k,XGBoost,0.45,0.25208943372866327
+Cardio70k,LogisticRegression,0.45,0.24698200270151682
+Cardio70k,MLP,0.45,0.25094016232961425
+Cardio70k,Treat All,0.5,-0.010542278473629763
+Cardio70k,Treat None,0.5,0.0
+Cardio70k,XGBoost,0.5,0.23048657791516597
+Cardio70k,LogisticRegression,0.5,0.2239395751009755
+Cardio70k,MLP,0.5,0.22895554162231524
+Cardio70k,Treat All,0.55,-0.1228247538595888
+Cardio70k,Treat None,0.55,0.0
+Cardio70k,XGBoost,0.55,0.2088706136620282
+Cardio70k,LogisticRegression,0.55,0.2015038178698667
+Cardio70k,MLP,0.55,0.2058328432397052
+Cardio70k,Treat All,0.6,-0.2631778480920376
+Cardio70k,Treat None,0.6,0.0
+Cardio70k,XGBoost,0.6,0.18566366777970572
+Cardio70k,LogisticRegression,0.6,0.1784969597993613
+Cardio70k,MLP,0.6,0.18390662136743408
+Cardio70k,Treat All,0.65,-0.44363182639090026
+Cardio70k,Treat None,0.65,0.0
+Cardio70k,XGBoost,0.65,0.16243566002245513
+Cardio70k,LogisticRegression,0.65,0.14997281629439219
+Cardio70k,MLP,0.65,0.1603942782986541
+Cardio70k,Treat All,0.7,-0.6842371307893832
+Cardio70k,Treat None,0.7,0.0
+Cardio70k,XGBoost,0.7,0.13473605420354517
+Cardio70k,LogisticRegression,0.7,0.11789465498218647
+Cardio70k,MLP,0.7,0.13294255454620568
+Cardio70k,Treat All,0.75,-1.0210845569472604
+Cardio70k,Treat None,0.75,0.0
+Cardio70k,XGBoost,0.75,0.10018809874455015
+Cardio70k,LogisticRegression,0.75,0.0794389116519152
+Cardio70k,MLP,0.75,0.09924031437278538
+Cardio70k,Treat All,0.8,-1.526355696184075
+Cardio70k,Treat None,0.8,0.0
+Cardio70k,XGBoost,0.8,0.05613799740452893
+Cardio70k,LogisticRegression,0.8,0.03939866726936028
+Cardio70k,MLP,0.8,0.051792770592438114
+Unified clinical,Treat All,0.05,0.5444816420613577
+Unified clinical,Treat None,0.05,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.05,0.5388562647494649
+Unified clinical,Soft-voting base ensemble,0.05,0.5445365237912299
+Unified clinical,XGBoost baseline,0.05,0.5388013830195928
+Unified clinical,Treat All,0.1,0.5191750666203221
+Unified clinical,Treat None,0.1,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.1,0.4988993164175645
+Unified clinical,Soft-voting base ensemble,0.1,0.5147144015757155
+Unified clinical,XGBoost baseline,0.1,0.5104275286757038
+Unified clinical,Treat All,0.15,0.49089124700975273
+Unified clinical,Treat None,0.15,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.15,0.4619395203336809
+Unified clinical,Soft-voting base ensemble,0.15,0.4799730111022511
+Unified clinical,XGBoost baseline,0.15,0.47828620499294605
+Unified clinical,Treat All,0.2,0.4590719499478623
+Unified clinical,Treat None,0.2,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.2,0.41788321167883213
+Unified clinical,Soft-voting base ensemble,0.2,0.43196037539103227
+Unified clinical,XGBoost baseline,0.2,0.44238790406673617
+Unified clinical,Treat All,0.25,0.4230100799443865
+Unified clinical,Treat None,0.25,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.25,0.37017726798748696
+Unified clinical,Soft-voting base ensemble,0.25,0.38460201598887733
+Unified clinical,XGBoost baseline,0.25,0.40389294403892945
+Unified clinical,Treat All,0.3,0.38179651422612837
+Unified clinical,Treat None,0.3,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.3,0.32325338894681965
+Unified clinical,Soft-voting base ensemble,0.3,0.340458811261731
+Unified clinical,XGBoost baseline,0.3,0.3637717860866974
+Unified clinical,Treat All,0.35,0.3342423999358305
+Unified clinical,Treat None,0.35,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.35,0.2862757680275928
+Unified clinical,Soft-voting base ensemble,0.35,0.28322772118392553
+Unified clinical,XGBoost baseline,0.35,0.3224111654768589
+Unified clinical,Treat All,0.4,0.2787625999304831
+Unified clinical,Treat None,0.4,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.4,0.246089676746611
+Unified clinical,Soft-voting base ensemble,0.4,0.23322905804657626
+Unified clinical,XGBoost baseline,0.4,0.2770246784845325
+Unified clinical,Treat All,0.45,0.21319556356052705
+Unified clinical,Treat None,0.45,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.45,0.19475779694757797
+Unified clinical,Soft-voting base ensemble,0.45,0.18594179543084657
+Unified clinical,XGBoost baseline,0.45,0.23954877239548772
+Unified clinical,Treat All,0.5,0.13451511991657972
+Unified clinical,Treat None,0.5,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.5,0.13712200208550576
+Unified clinical,Soft-voting base ensemble,0.5,0.13712200208550576
+Unified clinical,XGBoost baseline,0.5,0.19708029197080293
+Unified clinical,Treat All,0.55,0.03835013324064396
+Unified clinical,Treat None,0.55,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.55,0.07032788784613594
+Unified clinical,Soft-voting base ensemble,0.55,0.07183408643262648
+Unified clinical,XGBoost baseline,0.55,0.14754953076120952
+Unified clinical,Treat All,0.6,-0.08185610010427569
+Unified clinical,Treat None,0.6,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.6,0.0072992700729926085
+Unified clinical,Soft-voting base ensemble,0.6,0.004431699687174051
+Unified clinical,XGBoost baseline,0.6,0.09358706986444199
+Unified clinical,Treat All,0.65,-0.23640697154774382
+Unified clinical,Treat None,0.65,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.65,-0.010502011023387575
+Unified clinical,Soft-voting base ensemble,0.65,-0.053254878593773425
+Unified clinical,XGBoost baseline,0.65,0.042008044093549635
+Unified clinical,Treat All,0.7,-0.44247480013903395
+Unified clinical,Treat None,0.7,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.7,-0.030066041014946143
+Unified clinical,Soft-voting base ensemble,0.7,-0.0938477580813348
+Unified clinical,XGBoost baseline,0.7,-0.024678484532499156
+Unified clinical,Treat All,0.75,-0.7309697601668412
+Unified clinical,Treat None,0.75,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.75,-0.045359749739311866
+Unified clinical,Soft-voting base ensemble,0.75,-0.11470281543274255
+Unified clinical,XGBoost baseline,0.75,-0.08237747653806071
+Unified clinical,Treat All,0.8,-1.1637122002085512
+Unified clinical,Treat None,0.8,0.0
+Unified clinical,HPEM (OOF soft-vote meta),0.8,-0.07924921793534936
+Unified clinical,Soft-voting base ensemble,0.8,-0.11001042752867574
+Unified clinical,XGBoost baseline,0.8,-0.16266944734098032
