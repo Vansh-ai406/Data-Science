@@ -26,6 +26,7 @@ ROOT_DIR = Path(__file__).resolve().parent
 SCRIPTS_DIR = ROOT_DIR / "scripts"
 REPORTS_DIR = ROOT_DIR / "reports"
 PLOTS_DIR = REPORTS_DIR / "plots"
+PAPER_DIR = ROOT_DIR / "paper"
 NOTEBOOKS_DIR = ROOT_DIR / "notebooks"
 
 DEFAULT_CARDIO70K = Path(r"D:\Downloads\CVD_Cardio70k_Cleaned.csv")
@@ -88,6 +89,12 @@ PIPELINE_STAGES = {
         "scripts": [
             ("build_implementation_notebook.py", []),
         ]
+    },
+    "paper": {
+        "title": "Phase 8: Compile IEEE Standard Research Paper (LaTeX, HTML, MD)",
+        "scripts": [
+            ("build_ieee_html_paper.py", []),
+        ]
     }
 }
 
@@ -143,11 +150,25 @@ def check_status(cardio_path: Path, unified_path: Path, unified_ml_path: Path):
     for nb in nb_files:
         print(f"  [READY] {nb.name:<45} ({nb.stat().st_size / 1024:.1f} KB)")
 
-    print("\n[5] DEFENSE & PRESENTATION MASTER ARTIFACTS:")
+    # 5. Check IEEE Paper
+    print("\n[5] IEEE RESEARCH PAPER MANUSCRIPTS (paper/):")
+    paper_files = [
+        ("IEEE Two-Column Printable Paper (HTML)", PAPER_DIR / "IEEE_RESEARCH_PAPER.html"),
+        ("IEEE LaTeX Source Manuscript (TEX)", PAPER_DIR / "IEEE_Cardiovascular_Disease_Prediction.tex"),
+        ("BibTeX Citations Bibliography (BIB)", PAPER_DIR / "references.bib"),
+        ("IEEE Research Paper Full Text (MD)", PAPER_DIR / "IEEE_RESEARCH_PAPER.md"),
+    ]
+    for label, p_path in paper_files:
+        stat = "[READY]" if p_path.exists() else "[MISSING]"
+        size = f"({p_path.stat().st_size / 1024:.1f} KB)" if p_path.exists() else ""
+        print(f"  {stat:<10} {label:<42} -> {p_path.name} {size}")
+
+    print("\n[6] DEFENSE & PRESENTATION MASTER ARTIFACTS:")
     key_artifacts = [
         ("Master Research Defense Guide (HTML)", REPORTS_DIR / "MASTER_RESEARCH_DEFENSE_GUIDE.html"),
         ("Plagiarism & Originality Report (HTML)", REPORTS_DIR / "PLAGIARISM_AND_ORIGINALITY_REPORT.html"),
         ("Interactive Walkthrough Notebook", NOTEBOOKS_DIR / "Cardiovascular_Disease_Pipeline_Walkthrough.ipynb"),
+        ("IEEE Two-Column Research Paper", PAPER_DIR / "IEEE_RESEARCH_PAPER.html"),
     ]
     for label, art_path in key_artifacts:
         stat = "[READY]" if art_path.exists() else "[NOT GENERATED]"
@@ -203,12 +224,13 @@ Available Stages:
   clinical-utility  Run Phase 5 calibration, DCA, subgroups, and explainability
   reports           Run Phase 6 HTML master guides compilation
   notebook          Run Phase 7 Jupyter notebook builder
+  paper             Run Phase 8 IEEE paper compiler
   all               Execute the complete research pipeline end-to-end
         """
     )
     parser.add_argument(
         "--stage",
-        choices=["status", "audit", "baselines", "deep-learning", "multi-center", "clinical-utility", "reports", "notebook", "all"],
+        choices=["status", "audit", "baselines", "deep-learning", "multi-center", "clinical-utility", "reports", "notebook", "paper", "all"],
         default="status",
         help="Pipeline phase to execute (default: status)"
     )
@@ -244,7 +266,7 @@ Available Stages:
         return
 
     stages_to_run = (
-        ["audit", "baselines", "deep-learning", "multi-center", "clinical-utility", "reports", "notebook"]
+        ["audit", "baselines", "deep-learning", "multi-center", "clinical-utility", "reports", "notebook", "paper"]
         if args.stage == "all"
         else [args.stage]
     )
