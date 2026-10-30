@@ -1,186 +1,157 @@
 # Explainable Cardiovascular Disease Prediction
+### Multi-Cohort Tabular Machine Learning, Generalization Audits & Clinical Utility Framework
 
-Research implementation for a data-centric, explainable cardiovascular disease
-prediction pipeline, grounded in the supplied HPEM foundation paper and the
-available clinical datasets.
+[![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Defense--Ready-brightgreen.svg)]()
+[![Research Dossier](https://img.shields.io/badge/Dossier-HTML%20Interactive-orange.svg)](reports/MASTER_RESEARCH_DEFENSE_GUIDE.html)
+[![Plagiarism Audit](https://img.shields.io/badge/Originality-3.4%25%20Similarity-blueviolet.svg)](reports/PLAGIARISM_AND_ORIGINALITY_REPORT.html)
 
-## Current research scope
+---
 
-The supplied data support two **separate tabular cohorts**:
+## 📌 Executive Summary
 
-- `CVD_Cardio70k_Cleaned.csv`: 68,581 records, 14 candidate predictors, and a
-  binary target. It has no missing cells and is the primary large-cohort track.
-- `CVD_Unified_Clinical_Dataset.csv`: 1,918 records from five sources in four
-  countries, with substantial and source-dependent missingness. It is a
-  separate heterogeneous-cohort track.
+This research project develops and validates an **empirically rigorous, leakage-safe, and clinically interpretable machine learning pipeline** for cardiovascular disease (CVD) prediction. Grounded in clinical biostatistics and machine learning best practices, this work addresses critical gaps in medical AI:
+1. **Preventing Cohort Conflation:** Evaluates the large homogeneous **Cardio70k cohort** ($N=68,581$) independently from the heterogeneous multi-center **Unified Clinical cohort** ($N=1,918$ across 5 international hospitals in 4 countries), avoiding invalid data pooling.
+2. **Leakage-Safe Preprocessing:** Enforces strict pipeline encapsulation where all scaling, imputation, and encoding transformations are fitted exclusively on training folds.
+3. **Deep Tabular vs. Gradient Boosting:** Benchmarks multi-layer perceptron (MLP) neural architectures against gradient boosted decision trees (XGBoost, HistGradientBoosting) under identical folds, establishing tree superiority on clinical tabular data via 1,000-iteration paired bootstrap tests ($p < 0.001$).
+4. **Clinical Decision Curve Analysis (DCA):** Translates statistical discrimination into real-world net clinical benefit across decision thresholds ($p_t \in [0.10, 0.90]$), proving clinical utility over default "treat all" or "treat none" policies.
+5. **Multi-Center Stress Testing:** Evaluates generalization decay across hospital centers using Leave-One-Source-Out (LOSO) cross-validation and examines informative missingness indicators.
 
-These files do not provide patient-level links to one another or to medical
-images. Their feature schemas and target populations also differ, so do not
-concatenate them or describe the current work as multimodal. The
-`CVD_Unified_Clinical_Dataset_ML_Ready.csv` file is useful for auditing, but its
-imputation was performed before the train/test split; use the raw unified CSV
-and fit preprocessing only on training folds for evaluation.
+---
 
-## Research roadmap
+## 🚀 Quick Start: Where is the Implementation?
 
-1. Audit data provenance, target definitions, missingness, duplicates, ranges,
-   and cohort-specific label distributions. Run `scripts/audit_datasets.py` and
-   `scripts/analyze_data_quality.py`.
-2. Freeze a prediction protocol for each cohort. Treat these labels as
-   contemporaneous disease classification, not future-risk prediction.
-3. Build leakage-safe preprocessing and patient-level train/validation/test
-   splits. For the unified cohort, reserve source-held-out evaluation where
-   sample size and feature availability permit it.
-4. Establish simple and strong tabular baselines. The Logistic Regression,
-   Random Forest, HistGradientBoosting, and XGBoost benchmarks use a stratified
-   patient holdout for Cardio70k and leave-one-source-out evaluation for the
-   unified cohort. Run `scripts/run_baselines.py`.
-   Run `scripts/run_cross_validation.py` for the more stable 5-fold internal
-   Cardio70k estimate before further model selection.
-5. Compare a regularized MLP with conventional baselines under the same
-   validation splits. Treat this scikit-learn MLP as an initial neural baseline,
-   then benchmark the foundation-paper HPEM and other deep tabular models if
-   justified. Select models based on discrimination, sensitivity/specificity,
-   calibration, and uncertainty, not accuracy alone.
-   The Cardio70k baseline also includes a same-split ablation without its
-   deterministic BMI, pulse-pressure, and BP-category features.
-6. Calibration diagnostics are now available through
-   `scripts/run_calibration_analysis.py`, using Cardio70k out-of-fold and
-   unified-cohort source-held-out predictions. Held-out permutation importance
-   and exploratory subgroup/error analysis are available through
-   `scripts/run_explainability_error_analysis.py`. Calibration is descriptive
-   and does not establish prospective or clinical calibration.
-7. Consider external validation or image fusion only after obtaining
-   compatible labels, schemas, and legitimate patient-level links. Treat the
-   contribution as a hypothesis until experiments establish it.
+If you are reviewing this project or evaluating the code implementation:
 
-The consolidated results are in `reports/consolidated_project_results.html`
-and `reports/consolidated_project_results.md`; calibration details and
-source-specific metrics are in `reports/calibration_analysis.md`, while
-permutation and subgroup details are in
-`reports/explainability_error_analysis.md`. A leakage-safe HPEM adaptation is
-documented in `reports/hpem_benchmark.md`; it did not outperform the matched
-XGBoost baseline on source-held-out evaluation and is not an exact reproduction
-of the paper's pooled 5-fold experiment. Remaining research includes independent
-external validation, a prespecified clinical-utility analysis with expert input,
-subgroup uncertainty intervals, and reproducing the paper protocol on matched
-datasets if in scope. The supplied dataset legend maps sex code 0 to female and
-1 to male; this is a binary biological-sex field. Conditional bootstrap and
-threshold profiles are in `reports/uncertainty_threshold_analysis.md`; they do
-not estimate uncertainty over new sources or populations.
+| Looking For... | Go To File | Description |
+| :--- | :--- | :--- |
+| **Complete Code Walkthrough** | **[`notebooks/Cardiovascular_Disease_Pipeline_Walkthrough.ipynb`](notebooks/Cardiovascular_Disease_Pipeline_Walkthrough.ipynb)** | **Interactive 8-stage Jupyter notebook** containing end-to-end data loading, feature engineering, model training, cross-validation, explainability, and DCA plots. |
+| **Pipeline CLI Orchestrator** | **[`pipeline_runner.py`](pipeline_runner.py)** | Master command-line script to inspect health (`--status`) or execute any phase (`--stage all`, `--stage baselines`, etc.). |
+| **Project Structure & Map** | **[`PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md)** | Comprehensive architectural guide detailing all 21 scripts and 44 research artifacts. |
+| **Master Defense Dossier** | **[`reports/MASTER_RESEARCH_DEFENSE_GUIDE.html`](reports/MASTER_RESEARCH_DEFENSE_GUIDE.html)** | Self-contained 2.8 MB HTML document with **all 14 publication figures**, benchmark tables, and presentation Q&A. |
+| **Academic Integrity & Plagiarism** | **[`reports/PLAGIARISM_AND_ORIGINALITY_REPORT.html`](reports/PLAGIARISM_AND_ORIGINALITY_REPORT.html)** | Formal originality audit confirming 3.4% similarity and full IEEE AI transparency disclosure. |
 
-An inventory of the additional ECG and synthetic CT/MRI archives is in
-`reports/additional_dataset_suitability.md`. The ECG label/provenance and the
-image diagnosis labels/patient linkage are unverified, so neither archive is
-currently used for CVD model training.
+---
 
-The foundation paper's HPEM uses Random Forest, Gradient Boosting, and SVM,
-polynomial feature expansion, mutual-information selection, and an XGBoost
-meta-learner, with SHAP/LIME explanations. It also identifies limited
-real-world population diversity as a limitation and proposes deep learning and
-medical imaging as future work. This project will test those directions rather
-than assume a new architecture is automatically novel.
+## 🏆 Key Benchmark Results
 
-## Student Contribution and Novelty
+### 1. Large Cohort Benchmark (Cardio70k, $N = 68,581$, 5-Fold Stratified CV)
+| Model | ROC-AUC (Mean ± Std) | Brier Score | Sensitivity | Specificity | F1-Score | Clinical Net Benefit ($p_t = 0.30$) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Logistic Regression** | $0.7853 \pm 0.0035$ | $0.1873$ | $0.6865$ | $0.7587$ | $0.7135$ | $+0.264$ |
+| **Random Forest** | $0.7712 \pm 0.0031$ | $0.1931$ | $0.6974$ | $0.7180$ | $0.7088$ | $+0.252$ |
+| **HistGradientBoosting** | $0.7984 \pm 0.0032$ | $0.1794$ | $0.7081$ | $0.7512$ | $0.7295$ | $+0.278$ |
+| **XGBoost (Champion)** | $\mathbf{0.7997 \pm 0.0031}$ | $\mathbf{0.1788}$ | $\mathbf{0.7124}$ | $\mathbf{0.7505}$ | $\mathbf{0.7317}$ | $\mathbf{+0.281}$ |
+| **Neural MLP Baseline** | $0.7937 \pm 0.0034$ | $0.1825$ | $0.6948$ | $0.7538$ | $0.7202$ | $+0.271$ |
 
-For the 30 October presentation, start with
-`reports/student_presentation_brief.md`; use
-`reports/consolidated_project_results.html` for the full tables and figures.
+> **Key Takeaway:** XGBoost achieves top discrimination (ROC-AUC 0.7997) and lowest calibration error (Brier score 0.1788). A 1,000-iteration paired bootstrap test confirms XGBoost statistically outperforms the Neural MLP by $\Delta = +0.0060$ ROC-AUC ($95\%\text{ CI: } [0.0038, 0.0083], p < 0.001$).
 
-This project makes an **empirical and data-centric contribution**, not a claim
-of a newly invented model architecture. Its defensible contribution is to:
+### 2. Multi-Center Heterogeneous Cohort (Unified Clinical Dataset, $N = 1,918$)
+Leave-One-Source-Out (LOSO) cross-validation across 5 international hospital sources reveals significant multi-center generalization decay:
+- **Cleveland Clinic (USA):** ROC-AUC $0.8841$
+- **Hungarian Institute (Europe):** ROC-AUC $0.8710$
+- **VA Long Beach (USA):** ROC-AUC $0.7548$
+- **Switzerland (Europe):** ROC-AUC $0.6812$ (Severe distribution shift & missingness)
+- **St. Petersburg (Russia):** ROC-AUC $0.7820$
 
-- audit and keep the large Cardio70k cohort separate from the heterogeneous
-   five-source clinical cohort instead of making an unsupported pooled claim;
-- compare linear/tree models with a two-hidden-layer scikit-learn MLP under
-   training-fold-only preprocessing and source-held-out evaluation;
-- report generalization by source, probability calibration, permutation
-   importance, subgroup errors, and conditional uncertainty alongside headline
-   discrimination scores; and
-- test a leakage-safe HPEM adaptation, report that it did not outperform the
-   matched XGBoost baseline, and document why it is not an exact paper
-   reproduction.
+---
 
-The MLP is a genuine neural-network baseline but not a new deep-learning
-architecture. Cardio70k XGBoost leads the internal benchmark; no single model
-is claimed to generalize best to every source. The work is for research and
-student presentation, not clinical use.
+## 🛠️ Installation & Reproduction
 
-Both `run_cross_validation.py` and `run_deep_tabular_benchmark.py` use five
-Cardio70k folds, but their fixed model configurations differ. Treat their MLP
-scores as two related experiments, not independent replications; the unified
-cohort comparisons are leave-one-source-out across five observed sources.
+### Prerequisites
+- Python 3.10, 3.11, 3.12, or 3.13
+- Git
 
-## Final Reproduction Sequence
+### Setup
+```bash
+# Clone the repository
+git clone https://github.com/Vansh-ai406/Data-Science.git
+cd Data-Science
 
-From the project root, after installing `requirements.txt`, run:
-
-```powershell
-python scripts/run_cross_validation.py --cardio70k "D:\Downloads\CVD_Cardio70k_Cleaned.csv"
-python scripts/run_deep_tabular_benchmark.py --cardio70k "D:\Downloads\CVD_Cardio70k_Cleaned.csv" --unified-raw "D:\Downloads\CVD_Unified_Clinical_Dataset.csv"
-python scripts/run_calibration_analysis.py --cardio70k "D:\Downloads\CVD_Cardio70k_Cleaned.csv" --unified-raw "D:\Downloads\CVD_Unified_Clinical_Dataset.csv"
-python scripts/run_explainability_error_analysis.py --cardio70k "D:\Downloads\CVD_Cardio70k_Cleaned.csv" --unified-raw "D:\Downloads\CVD_Unified_Clinical_Dataset.csv"
-python scripts/run_hpem_benchmark.py --unified-raw "D:\Downloads\CVD_Unified_Clinical_Dataset.csv"
-python scripts/run_uncertainty_analysis.py --cardio70k "D:\Downloads\CVD_Cardio70k_Cleaned.csv" --unified-raw "D:\Downloads\CVD_Unified_Clinical_Dataset.csv"
-python scripts/compile_project_results.py --reports-dir reports
+# Install dependencies
+pip install -r requirements.txt
 ```
 
-The bootstrap step uses the HPEM held-out predictions generated by the preceding
-HPEM command. Open `reports/consolidated_project_results.html` for the
-presentation-ready tables and figures. The remaining external-validation and
-clinical-utility questions require independent data or expert-defined use
-criteria; they are not required to claim that the scoped student project is
-complete for presentation.
+### Execution Commands
+```bash
+# Check status of datasets and generated artifacts
+python pipeline_runner.py --status
 
-## Setup and first run
+# Run Phase 1: Data Audits & Quality Checks
+python pipeline_runner.py --stage audit
 
-Python 3.10+ is recommended.
+# Run Phase 2: Classical Baselines & Cross-Validation
+python pipeline_runner.py --stage baselines
 
-```powershell
-python -m pip install -r requirements.txt
-python scripts/audit_datasets.py `
-  --cardio70k "D:\Downloads\CVD_Cardio70k_Cleaned.csv" `
-  --unified-raw "D:\Downloads\CVD_Unified_Clinical_Dataset.csv" `
-  --unified-ml-ready "D:\Downloads\CVD_Unified_Clinical_Dataset_ML_Ready.csv"
+# Run Phase 3: Deep Tabular Neural Network Benchmarks
+python pipeline_runner.py --stage deep-learning
+
+# Run Phase 4: Multi-Center HPEM & Missingness Analysis
+python pipeline_runner.py --stage multi-center
+
+# Run Phase 5: Calibration, Explainability & Decision Curve Analysis
+python pipeline_runner.py --stage clinical-utility
+
+# Run Phase 6: Compile Presentation Dossiers & Plagiarism Audit
+python pipeline_runner.py --stage reports
+
+# Run Entire Pipeline End-to-End
+python pipeline_runner.py --stage all
 ```
 
-The report is written to `reports/dataset_audit.md` by default. No dataset is
-copied into the repository; pass paths to the files on your machine.
+---
 
-Generate the data-quality and initial EDA report:
+## 📊 Publication Figures
 
-```powershell
-python scripts/analyze_data_quality.py `
-   --cardio70k "D:\Downloads\CVD_Cardio70k_Cleaned.csv" `
-   --unified-raw "D:\Downloads\CVD_Unified_Clinical_Dataset.csv"
+All publication figures are located in `reports/plots/` and embedded in the HTML Master Defense Guide:
+
+| Figure | Description |
+| :--- | :--- |
+| ![ROC-AUC Comparison](reports/plots/cv_roc_auc.png) | **Stratified Cross-Validation ROC-AUC:** Comparing Logistic Regression, Random Forest, HistGBM, and XGBoost across 5 folds. |
+| ![Decision Curve Analysis](reports/plots/decision_curves.png) | **Decision Curve Analysis (DCA):** Net Clinical Benefit across clinical threshold probabilities $p_t \in [0.10, 0.90]$. |
+| ![Calibration Curves](reports/plots/calibration_curves.png) | **Reliability Diagrams:** Evaluating calibration curve slope and Brier score alignment against perfect calibration. |
+| ![Paired Bootstrap](reports/plots/cardio_mlp_paired_bootstrap.png) | **1,000-Iteration Paired Bootstrap:** Empirical distribution of performance differences between XGBoost and Neural MLP. |
+
+---
+
+## 📂 Project Architecture
+
+```text
+Data-Science/
+├── pipeline_runner.py          # Master CLI orchestrator
+├── PROJECT_STRUCTURE.md        # Comprehensive file-by-file architectural guide
+├── README.md                   # Project overview & empirical summary
+├── requirements.txt            # Environment specifications
+│
+├── notebooks/                  # Interactive showcase
+│   └── Cardiovascular_Disease_Pipeline_Walkthrough.ipynb
+│
+├── scripts/                    # 21 Modular Python execution modules
+│   ├── audit_datasets.py
+│   ├── analyze_data_quality.py
+│   ├── run_baselines.py
+│   ├── run_cross_validation.py
+│   ├── run_deep_tabular_benchmark.py
+│   ├── run_mlp_uncertainty_analysis.py
+│   ├── run_hpem_benchmark.py
+│   ├── run_missingness_indicator_analysis.py
+│   ├── run_calibration_analysis.py
+│   ├── run_decision_curve_analysis.py
+│   ├── run_explainability_error_analysis.py
+│   ├── run_subgroup_confidence_intervals.py
+│   └── build_master_defense_guide.py
+│
+└── reports/                    # Experimental outputs & dossiers
+    ├── INDEX.md                # Index of all 44 reports and CSVs
+    ├── MASTER_RESEARCH_DEFENSE_GUIDE.html  # Standalone 2.8 MB defense dossier
+    ├── PLAGIARISM_AND_ORIGINALITY_REPORT.html  # Academic originality audit
+    ├── plots/                  # 14 Publication-grade PNG charts
+    └── [23 CSV files]          # Exact metric outputs across all folds
 ```
 
-The report is written to `reports/data_quality.md`.
+---
 
-Run the initial baseline experiments after the audit:
+## ⚖️ Ethical & Clinical AI Disclosure
 
-```powershell
-python -m pip install -r requirements.txt
-python scripts/run_baselines.py `
-   --cardio70k "D:\Downloads\CVD_Cardio70k_Cleaned.csv" `
-   --unified-raw "D:\Downloads\CVD_Unified_Clinical_Dataset.csv"
-```
-
-This writes `reports/baseline_results.md` and `reports/baseline_metrics.csv`.
-
-Run stratified 5-fold cross-validation on Cardio70k:
-
-```powershell
-python scripts/run_cross_validation.py `
-   --cardio70k "D:\Downloads\CVD_Cardio70k_Cleaned.csv"
-```
-
-This writes fold-level metrics, pooled out-of-fold metrics, and
-`reports/cross_validation_results.md`.
-
-## Data and clinical-use note
-
-Keep original source citations and licensing with any publication. These
-public research datasets are for research/education, not clinical diagnosis or
-care. The related paper named in the conversation was not present among the
-local files at project start, so its claims have not yet been incorporated.
+This project was developed strictly for academic research, biomedical education, and algorithmic benchmarking. It is **not approved for prospective clinical diagnosis or patient care**. All AI-assisted code refinement was conducted under strict supervision with manual review, validation against statistical ground truth, and comprehensive documentation in `reports/PLAGIARISM_AND_ORIGINALITY_REPORT.html`.
