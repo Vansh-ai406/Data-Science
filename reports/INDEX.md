@@ -85,3 +85,4 @@ All figures are saved in 300 DPI high-resolution PNG format:
 | `research_summary.md` | Executive summary of research findings |
 | `student_presentation_brief.md` | Quick speaking points and defense notes |
 | `GITHUB_PROFILE_README_TEMPLATE.md` | Optimized GitHub profile template for Vansh-ai406 |
+

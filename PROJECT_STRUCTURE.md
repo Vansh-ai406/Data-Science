@@ -235,3 +235,4 @@ python pipeline_runner.py --stage all
 2. **Strict Leakage Prevention:** All scalers, imputers, and encoders are fit **strictly on training folds** and only evaluated on out-of-fold/held-out test sets.
 3. **No Multimodal Claims:** Tabular clinical records cannot be paired with unlinked external imaging or ECG datasets without verified patient-level identifiers.
 4. **Empirical Rigor:** Tree-based gradient boosting (XGBoost ROC-AUC 0.7997) decisively outperforms both neural tabular MLPs (ROC-AUC 0.7937, $p < 0.001$) and stacked ensemble HPEM models (ROC-AUC 0.7853) across rigorous paired bootstrap validation.
+
