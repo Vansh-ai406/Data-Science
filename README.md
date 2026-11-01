@@ -31,6 +31,7 @@ If you are reviewing this project or evaluating the code implementation:
 | **Project Structure & Map** | **[`PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md)** | Comprehensive architectural guide detailing all 21 scripts and 44 research artifacts. |
 | **Master Defense Dossier** | **[`reports/MASTER_RESEARCH_DEFENSE_GUIDE.html`](reports/MASTER_RESEARCH_DEFENSE_GUIDE.html)** | Self-contained 2.8 MB HTML document with **all 14 publication figures**, benchmark tables, and presentation Q&A. |
 | **Academic Integrity & Plagiarism** | **[`reports/PLAGIARISM_AND_ORIGINALITY_REPORT.html`](reports/PLAGIARISM_AND_ORIGINALITY_REPORT.html)** | Formal originality audit confirming 3.4% similarity and full IEEE AI transparency disclosure. |
+| **IEEE Research Paper Suite** | **[`paper/IEEE_RESEARCH_PAPER.html`](paper/IEEE_RESEARCH_PAPER.html)** | **Two-column printable IEEE paper** with KaTeX math and figures (`paper/*.tex`, `paper/*.bib`). |
 
 ---
 
@@ -127,7 +128,13 @@ Data-Science/
 ├── notebooks/                  # Interactive showcase
 │   └── Cardiovascular_Disease_Pipeline_Walkthrough.ipynb
 │
-├── scripts/                    # 21 Modular Python execution modules
+├── paper/                      # IEEE Research Paper Suite (LaTeX, HTML, MD, BibTeX)
+│   ├── IEEE_RESEARCH_PAPER.html # Authentic two-column printable IEEE format (Ctrl+P -> PDF)
+│   ├── IEEE_Cardiovascular_Disease_Prediction.tex # Formal IEEEtran LaTeX manuscript
+│   ├── references.bib          # Academic BibTeX citations
+│   └── IEEE_RESEARCH_PAPER.md  # Full manuscript in Markdown
+│
+├── scripts/                    # 22 Modular Python execution modules
 │   ├── audit_datasets.py
 │   ├── analyze_data_quality.py
 │   ├── run_baselines.py

@@ -32,6 +32,12 @@ When a professor, evaluator, or interviewer asks: **"Show me your implementation
 │    your plagiarism & AI status?" │    PLAGIARISM_AND_ORIGINALITY_REPORT.html│
 │                                  │ (Verified 3.4% similarity, full IEEE AI  │
 │                                  │  transparency disclosure & methodology)  │
+├──────────────────────────────────┼──────────────────────────────────────────┤
+│ 5. "Where is your IEEE research  │ 👉 Open: paper/                          │
+│    paper manuscript?"            │    IEEE_RESEARCH_PAPER.html              │
+│                                  │ (Authentic two-column IEEE format with   │
+│                                  │  KaTeX math, figures & Ctrl+P PDF export;│
+│                                  │  LaTeX source in paper/*.tex & *.bib)    │
 └──────────────────────────────────┴──────────────────────────────────────────┘
 ```
 
@@ -53,7 +59,13 @@ Data-Science - Copy/
 │   └── Cardiovascular_Disease_Pipeline_Walkthrough.ipynb
 │                               # Comprehensive 8-stage interactive research walkthrough
 │
-├── scripts/                    # [MODULAR IMPLEMENTATION CODE] 21 Python modules
+├── paper/                      # [IEEE RESEARCH PAPER SUITE]
+│   ├── IEEE_RESEARCH_PAPER.html # Authentic two-column printable IEEE format (Ctrl+P -> PDF)
+│   ├── IEEE_Cardiovascular_Disease_Prediction.tex # Formal IEEEtran LaTeX manuscript
+│   ├── references.bib          # BibTeX academic citations
+│   └── IEEE_RESEARCH_PAPER.md  # Full manuscript in GitHub Flavored Markdown
+│
+├── scripts/                    # [MODULAR IMPLEMENTATION CODE] 22 Python modules
 │   ├── Phase 1: Data Audit & Provenance
 │   │   ├── audit_datasets.py
 │   │   ├── analyze_data_quality.py
@@ -163,6 +175,7 @@ The implementation code is organized into **7 distinct scientific phases**. Ever
 | [`build_master_defense_guide.py`](file:///scripts/build_master_defense_guide.py) | Inlines all 14 figures as Base64 images into a self-contained 2.8 MB defense HTML. | `reports/MASTER_RESEARCH_DEFENSE_GUIDE.html` |
 | [`build_plagiarism_report.py`](file:///scripts/build_plagiarism_report.py) | Generates comprehensive originality audit, similarity matrix, and IEEE AI declaration. | `reports/PLAGIARISM_AND_ORIGINALITY_REPORT.html` |
 | [`build_implementation_notebook.py`](file:///scripts/build_implementation_notebook.py) | Generates the clean interactive Jupyter implementation walkthrough. | `notebooks/Cardiovascular_Disease_Pipeline_Walkthrough.ipynb` |
+| [`generate_ieee_paper.py`](file:///scripts/generate_ieee_paper.py) | Generates authentic two-column printable IEEE format paper with KaTeX math & figures. | `paper/IEEE_RESEARCH_PAPER.html` |
 | [`compile_project_results.py`](file:///scripts/compile_project_results.py) | Compiles all experiment CSVs into an HTML results digest. | `reports/consolidated_project_results.html` |
 
 ---

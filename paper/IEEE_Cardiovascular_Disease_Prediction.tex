@@ -1,0 +1,81 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Explainable Cardiovascular Disease Prediction: Multi-Cohort Tabular Machine Learning, Generalization Audits, and Decision Curve Analysis}
+
+\author{
+\IEEEauthorblockN{Under the Guidance of Rinky Chhatwani}
+\vskip 0.5em
+\IEEEauthorblockN{Vansh Rawat, Drisha Chauhan, Karan Bheda, and Harsh Rathva}
+\IEEEauthorblockA{\textit{Department of Artificial Intelligence} \\
+\textit{Sardar Vallabhbhai National Institute of Technology, Surat, Gujarat, India}}
+}
+
+\maketitle
+
+\begin{abstract}
+Cardiovascular diseases (CVDs) represent the foremost cause of global mortality. While machine learning classifiers have promised enhanced risk detection, published healthcare AI literature frequently suffers from fatal methodological flaws: naive multi-center cohort pooling, severe data leakage during feature preprocessing, over-reliance on threshold-dependent accuracy, and an absence of clinical utility evaluation. In this paper, we formulate and validate a leakage-safe, multi-cohort tabular machine learning framework for CVD screening. Grounded in two independently handled clinical datasets---Cardio70k ($N = 68,581$) and Unified Clinical ($N = 1,918$ across five hospital centers: Mendeley Data India $N=1,000$, UCI Cleveland $N=303$, UCI Hungary $N=293$, UCI Long Beach VA $N=199$, and UCI Switzerland $N=123$)---we benchmark linear models, ensemble decision trees, and deep tabular neural networks. On Cardio70k, XGBoost attained champion discrimination (ROC-AUC: $0.8019 \pm 0.0027$, PR-AUC: $0.7828$, Brier score: $0.1802$), statistically outperforming the deep tabular neural network ($\Delta\text{ROC-AUC} = +0.0027$, 95\% CI: $[0.0020, 0.0036]$, paired bootstrap $p < 0.001$). Under Leave-One-Source-Out (LOSO) multi-center testing, we uncover steep cross-border generalization decay, where models trained on Western hospital centers collapsed to near-random discrimination ($0.4937$ ROC-AUC) on the Indian cohort. Furthermore, Decision Curve Analysis (DCA) proves a substantial positive Net Clinical Benefit ($+0.3246$ at threshold $p_t = 0.30$). Finally, permutation feature reliance and demographic subgroup auditing with exact 95\% Clopper-Pearson confidence intervals provide transparent verification of clinical alignment and algorithmic equity.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Cardiovascular disease, tabular machine learning, decision curve analysis, multi-center generalization, probability calibration, explainable AI, algorithmic fairness.
+\end{IEEEkeywords}
+
+\section{Introduction}
+Cardiovascular diseases (CVDs) remain the leading contributor to global morbidity and mortality \cite{who_cvd_2021}. Standard primary-care screening tools, such as the Framingham Risk Score \cite{framingham_2008} and the European SCORE2 guidelines \cite{score2_2021}, employ multivariable parametric regressions fitted on historical epidemiological cohorts. Although clinically entrenched, these linear scoring systems cannot autonomously capture complex non-linear interactions among physiological biomarkers.
+
+Machine learning (ML) models offer greater flexibility, but translational biomedical reviews highlight persistent methodological flaws violating TRIPOD guidelines \cite{steyerberg_tripod_2015}: naive cohort pooling, data leakage during scaling/imputation, over-parameterized deep neural networks without demonstrated tabular advantages \cite{shwartz_tabular_2022, grinsztajn_tabular_2022}, and reliance on ROC-AUC without measuring clinical utility \cite{vickers_dca_2006, vickers_dca_update_2016}.
+
+This paper establishes an end-to-end, leak-free, and explainable cardiovascular prediction framework developed under the faculty guidance of Rinky Chhatwani at the Department of Artificial Intelligence, Sardar Vallabhbhai National Institute of Technology, Surat.
+
+\section{Related Work}
+Classical CVD risk estimation began with Framingham \cite{framingham_2008} and SCORE2 \cite{score2_2021}. Non-linear tree ensembles including Random Forests \cite{breiman_rf_2001} and XGBoost \cite{chen_xgboost_2016} demonstrated superior inductive biases for tabular clinical features \cite{grinsztajn_tabular_2022}. Vickers and Elkin \cite{vickers_dca_2006} formulated Decision Curve Analysis to evaluate real-world net clinical benefit across operational threshold probabilities.
+
+\section{Cohorts and Preprocessing}
+\subsection{Cardio70k Screening Cohort}
+Cardio70k comprises $N = 68,581$ records with 34,652 negative cases (50.53\%) and 33,929 positive cases (49.47\%), including 44,665 females and 23,916 males. Predictors encompass age, sex, height, weight, BMI, systolic and diastolic blood pressure, pulse pressure, blood pressure category, cholesterol, glucose, smoking, alcohol, and physical activity.
+
+\subsection{Unified Clinical Multi-Center Cohort}
+Unified Clinical comprises $N = 1,918$ high-acuity diagnostic records across five international centers: Mendeley Data India ($N = 1,000$) \cite{mendeley_india_2020}, UCI Cleveland ($N = 303$) \cite{detrano_uci_1989}, UCI Hungary ($N = 293$) \cite{detrano_uci_1989}, UCI Long Beach VA ($N = 199$) \cite{detrano_uci_1989}, and UCI Switzerland ($N = 123$) \cite{detrano_uci_1989}.
+
+\subsection{Multimodal Asset Auditing}
+Independent 12-lead ECG waveforms ($N = 4,998$) and synthetic cardiac CT/MRI slices ($N = 30,352$) lacked universal patient identifiers linking to verified outcomes; attempting synthetic pairing was rejected to avoid catastrophic data leakage.
+
+\section{System Architecture and Methodology}
+All transformations (median imputation with missingness indicators, robust $z$-score scaling) were fitted exclusively on training partitions. Benchmarked models include $\ell_2$-regularized Logistic Regression \cite{hosmer_lemeshow_2013}, Random Forest \cite{breiman_rf_2001}, HistGradientBoosting, XGBoost \cite{chen_xgboost_2016}, and a two-hidden-layer feedforward MLP ($128 \to 64$ units) with dropout ($p = 0.20$).
+
+\section{Experimental Results and Benchmarks}
+\subsection{Cardio70k 5-Fold Cross-Validation}
+On Cardio70k ($N = 68,581$), XGBoost achieved champion discrimination: ROC-AUC $0.8019 \pm 0.0027$, PR-AUC $0.7828$, Brier score $0.1802$, Accuracy $0.7324$, Sensitivity $0.7124$, Specificity $0.7505$, and Net Benefit $+0.3246$ at $p_t = 0.30$. A 1,000-iteration paired bootstrap test confirmed XGBoost significantly outperformed the neural MLP ($\Delta\text{ROC-AUC} = +0.0027$, 95\% CI: $[0.0020, 0.0036]$, $p < 0.001$).
+
+\subsection{Leave-One-Source-Out Generalization Gap}
+Evaluating model transfer on Unified Clinical ($N = 1,918$) revealed high European performance (Hungary: 0.8370 ROC-AUC; Cleveland: 0.8358 ROC-AUC) but severe collapse on the Indian cohort (0.4937 ROC-AUC), exposing acute international distribution shift.
+
+\section{Interpretability, Clinical Utility, and Equity}
+Decision Curve Analysis demonstrated positive Net Clinical Benefit across thresholds $p_t \in [0.10, 0.90]$ ($+0.3246$ at $p_t = 0.30$ vs. $+0.2782$ for Treat All). Permutation feature reliance identified systolic blood pressure ($\Delta\text{AUC} = -0.1473$) and age ($\Delta\text{AUC} = -0.0371$) as primary drivers. Demographic slicing with exact 95\% Clopper-Pearson confidence limits \cite{clopper_pearson_1934} confirmed equitable discrimination across biological sexes (Female: 0.8036; Male: 0.7985 ROC-AUC).
+
+\section{Limitations and Future Work}
+Limitations include cross-sectional retrospective labels, indication bias in referral tests, lack of universal patient IDs for multimodal fusion, and geographic domain shift on South Asian patients. Future work focuses on HL7 FHIR microservice containerization, tabular self-attention transformers (FT-Transformer), federated multi-hospital learning ($\text{FedAvg}$), and localized recalibration for Indian cohorts.
+
+\section{Conclusion}
+This study establishes a leakage-safe, explainable CVD screening framework. Rigorous multi-cohort benchmarking and Decision Curve Analysis prove that gradient boosted trees achieve superior discrimination and positive Net Clinical Benefit over default clinical strategies.
+
+\section*{IEEE Ethics and AI Statement}
+The authors affirm that all research hypotheses, statistical formulations, experimental protocols, and clinical analyses were developed, executed, and validated by the student authors under the academic guidance of faculty member Rinky Chhatwani at the Department of Artificial Intelligence, Sardar Vallabhbhai National Institute of Technology, Surat. AI programming tools were utilized solely for code refactoring and formatting under human oversight. Code: \url{https://github.com/Vansh-ai406/Data-Science}.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
