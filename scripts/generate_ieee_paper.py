@@ -106,20 +106,43 @@ def build_paper():
     margin: 12px 0 6px 0;
   }
 
+  .guidance-block {
+    margin-bottom: 8px;
+  }
+
   .guidance-text {
     font-size: 11pt;
     font-weight: bold;
     color: #1a365d;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
     letter-spacing: 0.3px;
     text-transform: uppercase;
+  }
+
+  .guidance-email {
+    font-size: 9pt;
+    color: #2b6cb0;
+    font-family: "Courier New", Courier, monospace;
+  }
+
+  .guidance-email a, .authors-emails a {
+    color: #2b6cb0;
+    text-decoration: none;
+  }
+
+  .guidance-email a:hover, .authors-emails a:hover {
+    text-decoration: underline;
+  }
+
+  .team-block {
+    margin-top: 4px;
   }
 
   .author-names {
     font-size: 11pt;
     font-weight: bold;
     color: #1e293b;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     letter-spacing: 0.2px;
   }
 
@@ -131,6 +154,14 @@ def build_paper():
     font-size: 9.5pt;
     font-style: italic;
     color: #475569;
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+
+  .authors-emails {
+    font-size: 8.5pt;
+    color: #2b6cb0;
+    font-family: "Courier New", Courier, monospace;
     line-height: 1.3;
   }
 
@@ -392,16 +423,27 @@ def build_paper():
     <h1 class="paper-title">Explainable Cardiovascular Disease Prediction: Multi-Cohort Tabular Machine Learning, Generalization Audits, and Decision Curve Analysis</h1>
     
     <div class="authors-section">
-      <div class="guidance-text">Under the Guidance of Rinky Chhatwani</div>
-      <div class="author-names">
-        <span>Vansh Rawat</span>, 
-        <span>Drisha Chauhan</span>, 
-        <span>Karan Bheda</span>, and 
-        <span>Harsh Rathva</span>
+      <div class="guidance-block">
+        <div class="guidance-text">Under the Guidance of Rinky Chhatwani</div>
+        <div class="guidance-email"><a href="mailto:rinkychhatwani@gmail.com">rinkychhatwani@gmail.com</a></div>
       </div>
-      <div class="author-affiliation">
-        Department of Artificial Intelligence<br>
-        Sardar Vallabhbhai National Institute of Technology, Surat, Gujarat, India
+      <div class="team-block">
+        <div class="author-names">
+          <span>Vansh Rawat</span>, 
+          <span>Drisha Chauhan</span>, 
+          <span>Karan Bheda</span>, and 
+          <span>Harsh Rathva</span>
+        </div>
+        <div class="author-affiliation">
+          Department of Artificial Intelligence<br>
+          Sardar Vallabhbhai National Institute of Technology, Surat, Gujarat, India
+        </div>
+        <div class="authors-emails">
+          <a href="mailto:vanshrawat385@gmail.com">vanshrawat385@gmail.com</a>, 
+          <a href="mailto:chauhan.drisha4116@gmail.com">chauhan.drisha4116@gmail.com</a>, 
+          <a href="mailto:karanbheda29898@gmail.com">karanbheda29898@gmail.com</a>, 
+          <a href="mailto:Harshrathvaai@gmail.com">Harshrathvaai@gmail.com</a>
+        </div>
       </div>
     </div>
   </header>
@@ -1104,10 +1146,12 @@ def build_paper():
 
 \author{
 \IEEEauthorblockN{Under the Guidance of Rinky Chhatwani}
+\IEEEauthorblockA{\textit{Email: rinkychhatwani@gmail.com}}
 \vskip 0.5em
 \IEEEauthorblockN{Vansh Rawat, Drisha Chauhan, Karan Bheda, and Harsh Rathva}
 \IEEEauthorblockA{\textit{Department of Artificial Intelligence} \\
-\textit{Sardar Vallabhbhai National Institute of Technology, Surat, Gujarat, India}}
+\textit{Sardar Vallabhbhai National Institute of Technology, Surat, Gujarat, India} \\
+\textit{Emails: vanshrawat385@gmail.com, chauhan.drisha4116@gmail.com, karanbheda29898@gmail.com, Harshrathvaai@gmail.com}}
 }
 
 \maketitle
@@ -1173,10 +1217,10 @@ The authors affirm that all research hypotheses, statistical formulations, exper
     print(f"Created IEEEtran LaTeX manuscript: {tex_path}")
 
     # Build Markdown version
-    md_content = """# Explainable Cardiovascular Disease Prediction: Multi-Cohort Tabular Machine Learning, Generalization Audits, and Decision Curve Analysis
+    md_content = r"""# Explainable Cardiovascular Disease Prediction: Multi-Cohort Tabular Machine Learning, Generalization Audits, and Decision Curve Analysis
 
-**Under the Guidance of:** Rinky Chhatwani  
-**Authors:** Vansh Rawat, Drisha Chauhan, Karan Bheda, and Harsh Rathva  
+**Under the Guidance of:** Rinky Chhatwani (`rinkychhatwani@gmail.com`)  
+**Authors:** Vansh Rawat (`vanshrawat385@gmail.com`), Drisha Chauhan (`chauhan.drisha4116@gmail.com`), Karan Bheda (`karanbheda29898@gmail.com`), and Harsh Rathva (`Harshrathvaai@gmail.com`)  
 **Affiliation:** Department of Artificial Intelligence, Sardar Vallabhbhai National Institute of Technology, Surat, Gujarat, India  
 **Code Repository:** [https://github.com/Vansh-ai406/Data-Science](https://github.com/Vansh-ai406/Data-Science)
 
@@ -1272,3 +1316,4 @@ This study implements a leak-free pipeline with strict cohort segregation, paire
 
 if __name__ == "__main__":
     build_paper()
+
